@@ -442,8 +442,8 @@ end
 function hit(instance, color)
 	local thing = instance
 	local arrow = thing:FindFirstChildOfClass("Decal")
-	arrow.Color = color
-	game:GetService("TweenService"):Create(arrow,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Color = Color3.new(1,1,1)}):Play()	
+	arrow.Color3 = color
+	game:GetService("TweenService"):Create(arrow,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Color3 = Color3.new(1,1,1)}):Play()	
 	thing.CanTouch = true
 	thing.Touched:Connect(function(part)
 		if not part.Name == "Note" then
@@ -482,6 +482,7 @@ owner.Chatted:Connect(function(msg)
 		RotSpeed = msg:sub(10,151544845)
 	end
 end)
+
 local mou = owner:GetMouse()
 mou.KeyDown:Connect(function(key)
 	if key == "w" then
