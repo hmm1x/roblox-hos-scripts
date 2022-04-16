@@ -439,18 +439,22 @@ function dropdown(amount)
 		wait(dela)
 	end
 end
-function hit(instance, color)
+function hitup(instance)
 	local thing = instance
 	local arrow = thing:FindFirstChildOfClass("Decal")
-	arrow.Color3 = color
+	arrow.Color3 = Color3.new(0.647059, 1, 0.541176)
 	game:GetService("TweenService"):Create(arrow,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Color3 = Color3.new(1,1,1)}):Play()	
 	thing.CanTouch = true
-	thing.Touched:Connect(function(part)
+	thing.CanQuery = false
+	if thing.Touched:Connect(function(part)
 		if not part.Name == "Note" then
 			return
 		end
 		game:GetService("Debris"):AddItem(part,0)
-	end)
+	end) then
+	end
+	thing.CanTouch = false
+	thing.CanQuery = false
 end
 owner.Chatted:Connect(function(msg)
 	if msg:sub(1,10) == "note/left/" then
@@ -486,6 +490,6 @@ end)
 local mou = owner:GetMouse()
 mou.KeyDown:Connect(function(key)
 	if key == "w" then
-		hit(up, Color3.new(0.627451, 1, 0.541176))
+		hitup(up)
 	end
 end)
