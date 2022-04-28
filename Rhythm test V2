@@ -273,6 +273,7 @@ local humanoid = Instance.new("Humanoid", funn)
 humanoid.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
 humanoid.MaxHealth = math.huge
 humanoid.Health = 0
+local botplay = false
 game:GetService("RunService").Heartbeat:Connect(function()
 	if disruption then
 		game:GetService("TweenService"):Create(left,TweenInfo.new(2,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Size = Vector3.new(math.random(3,7),math.random(3,7),math.random(3,7))}):Play()	
@@ -296,6 +297,9 @@ function dropleft(amount)
 		baon:Play()
 		supersuit.Transparency = 1
 		supersuit.Size = Vector3.new(7, 7, 7)
+		supersuit.Touched:Connect(function(pa)
+			hitleft()
+		end)
 		game:GetService("RunService").Heartbeat:Connect(function()
 			if Rotation then
 				game:GetService("TweenService"):Create(supersuit,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Orientation = supersuit.Orientation + Vector3.new(RotSpeed,0,0)}):Play()	
@@ -334,6 +338,9 @@ function dropright(amount)
 		supersuit.Transparency = 1
 		supersuit.Size = Vector3.new(7, 7, 7)
 		supersuit.Anchored = true
+		supersuit.Touched:Connect(function(pa)
+			hitright()
+		end)
 		supersuit.BottomSurface = Enum.SurfaceType.Smooth
 		supersuit.TopSurface = Enum.SurfaceType.Smooth
 		game:GetService("RunService").Heartbeat:Connect(function()
@@ -386,6 +393,9 @@ function dropup(amount)
 		supersuit.Transparency = 1
 		supersuit.Size = Vector3.new(7, 7, 7)
 		supersuit.Anchored = true
+		supersuit.Touched:Connect(function(pa)
+			hitup()
+		end)
 		supersuit.BottomSurface = Enum.SurfaceType.Smooth
 		supersuit.TopSurface = Enum.SurfaceType.Smooth
 		game:GetService("RunService").Heartbeat:Connect(function()
@@ -426,6 +436,9 @@ function dropdown(amount)
 		game:GetService("RunService").Heartbeat:Connect(function()
 			supersuit.Position = supersuit.Position - Vector3.new(0,speed,0)
 		end)
+		supersuit.Touched:Connect(function(pa)
+			hitdown()
+		end)
 		local su = Instance.new("Texture", supersuit)		
 		su.StudsPerTileU = 7
 		su.StudsPerTileV = 7
@@ -439,8 +452,11 @@ function dropdown(amount)
 		wait(dela)
 	end
 end
-function hitup(instance)
-	local thing = instance
+function hitup()
+	if botplay == false then
+		return
+	end	
+	local thing = up
 	local arrow = thing:FindFirstChildOfClass("Decal")
 	arrow.Color3 = Color3.new(0.647059, 1, 0.541176)
 	game:GetService("TweenService"):Create(arrow,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Color3 = Color3.new(1,1,1)}):Play()	
@@ -453,6 +469,72 @@ function hitup(instance)
 		game:GetService("Debris"):AddItem(part,0)
 	end) then
 	end
+	thing.CanTouch = false
+	thing.CanQuery = false
+end
+function hitdown()
+	if botplay == false then
+		return
+	end	
+	local thing = down
+	local arrow = thing:FindFirstChildOfClass("Decal")
+	arrow.Color3 = Color3.new(0.654902, 0.937255, 1)
+	
+	game:GetService("TweenService"):Create(arrow,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Color3 = Color3.new(1,1,1)}):Play()	
+	thing.CanTouch = true
+	thing.CanQuery = false
+	if thing.Touched:Connect(function(part)
+			if not part.Name == "Note" then
+				return
+			end
+			game:GetService("Debris"):AddItem(part,0)
+		end) then
+	end
+	wait(0.1)
+	thing.CanTouch = false
+	thing.CanQuery = false
+end
+function hitright()
+	if botplay == false then
+		return
+	end	
+	local thing = right
+	local arrow = thing:FindFirstChildOfClass("Decal")
+	arrow.Color3 = Color3.new(1, 0.47451, 0.482353)
+
+	game:GetService("TweenService"):Create(arrow,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Color3 = Color3.new(1,1,1)}):Play()	
+	thing.CanTouch = true
+	thing.CanQuery = false
+	if thing.Touched:Connect(function(part)
+			if not part.Name == "Note" then
+				return
+			end
+			game:GetService("Debris"):AddItem(part,0)
+		end) then
+	end
+	wait(0.1)
+	thing.CanTouch = false
+	thing.CanQuery = false
+end
+function hitleft()
+	if botplay == false then
+		return
+	end	
+	local thing = left
+	local arrow = thing:FindFirstChildOfClass("Decal")
+	arrow.Color3 = Color3.new(0.580392, 0.278431, 1)
+
+	game:GetService("TweenService"):Create(arrow,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.Out),{Color3 = Color3.new(1,1,1)}):Play()	
+	thing.CanTouch = true
+	thing.CanQuery = false
+	if thing.Touched:Connect(function(part)
+			if not part.Name == "Note" then
+				return
+			end
+			game:GetService("Debris"):AddItem(part,0)
+		end) then
+	end
+	wait(0.1)
 	thing.CanTouch = false
 	thing.CanQuery = false
 end
@@ -484,6 +566,12 @@ owner.Chatted:Connect(function(msg)
 		Rotation = false
 	elseif msg:sub(1,9) == "rotspeed/" then
 		RotSpeed = msg:sub(10,151544845)
+	elseif msg:sub(1,4) == "bot/" then
+		if msg:sub(5,10) == "true" then
+			botplay = true
+		elseif msg:sub(5,10) == "false" then
+			botplay = false
+		end
 	end
 end)
 
