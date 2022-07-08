@@ -117,13 +117,14 @@ screen.BrickColor = BrickColor.new("Black")
 screen.Transparency = 0.6
 screen.Reflectance = 0.2
 screen.Size = Vector3.new(10, 7, 1)
+screen.CanCollide = false
+
 local _cFrame = head.CFrame
-local _vector3 = Vector3.new(0, 0, -10)
+local _vector3 = Vector3.new(0, 0, -5)
 screen.CFrame = _cFrame + _vector3
 screen.Anchored = true
-screen.CanCollide = false
 game:GetService("RunService").Heartbeat:Connect(function()
-	screen.CFrame = _cFrame * _vector3
+	screen.CFrame = owner.Character.Head.CFrame * CFrame.new(-10,0,0) + _vector3
 end)
 local gui = Instance.new("SurfaceGui", screen)
 gui.Face = Enum.NormalId.Back
