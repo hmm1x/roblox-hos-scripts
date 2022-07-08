@@ -124,7 +124,7 @@ local _vector3 = Vector3.new(0, 0, -5)
 screen.CFrame = _cFrame + _vector3
 screen.Anchored = true
 game:GetService("RunService").Heartbeat:Connect(function()
-	screen.CFrame = owner.Character.Head.CFrame * CFrame.new(-10,0,0) + _vector3
+	screen.CFrame = owner.Character.Head.CFrame * CFrame.new(-10,0,-5) 
 end)
 local gui = Instance.new("SurfaceGui", screen)
 gui.Face = Enum.NormalId.Back
