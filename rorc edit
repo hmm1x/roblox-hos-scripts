@@ -5,9 +5,17 @@ local text = game:GetService("TextService")
 local players = game:GetService("Players")
 local http = game:GetService("HttpService")
 local char = owner.Character
-local root = char:FindFirstChild("HumanoidRootPart")
 local head = char:FindFirstChild("Head")
 local channel = ""
+local funnynames = {
+	"Donalod ttrumpdqdqjidqudhqiudq",
+	"Gather free robux at amongus.com!",
+	"amogus",
+	"amongus!",
+	"Hhahahahahahadsiddhqdqiuhqdiqsqodj",
+	owner.Name.." is a idiot!",
+	"Man, i hope no one eats my caik"
+}
 local NAME_COLORS = { Color3.new(), Color3.new(1 / 255, 162 / 255, 255 / 255), Color3.new(2 / 255, 184 / 255, 87 / 255), BrickColor.new("Bright violet").Color, BrickColor.new("Bright orange").Color, BrickColor.new("Bright yellow").Color, BrickColor.new("Light reddish violet").Color, BrickColor.new("Brick yellow").Color }
 local function encode(input)
 	local encoded = {}
@@ -117,16 +125,13 @@ screen.Material = Enum.Material.Glass
 screen.BrickColor = BrickColor.new("Black")
 screen.Transparency = 0.6
 screen.Reflectance = 0.2
-screen.Size = Vector3.new(10, 7, 1)
-screen.CanCollide = false
-
+screen.Size = Vector3.new(10, 7, 0.001)
 local _cFrame = head.CFrame
 local _vector3 = Vector3.new(0, 0, -5)
 screen.CFrame = _cFrame + _vector3
+
 screen.Anchored = true
-game:GetService("RunService").Heartbeat:Connect(function()
-	screen.CFrame = root.CFrame * CFrame.new(0,0,-5)
-end)
+screen.CanCollide = false
 local gui = Instance.new("SurfaceGui", screen)
 gui.Face = Enum.NormalId.Back
 local scroller = Instance.new("ScrollingFrame", gui)
@@ -332,6 +337,18 @@ local _arg0 = function(player)
 	player.Chatted:Connect(function(command)
 		if string.sub(command, 1, 6) == "/send " then
 			send(string.sub(command, 7, -1), "text", player.UserId, "")
+elseif string.sub(command, 1, 13) == "/send amogus " then
+			send(string.sub(command, 13, -1), "text", player.UserId, "")
+			output("Ayo hold up.")
+			wait(0.3)
+			output("wait a minute")
+			wait(3)
+			for i = 1,150 do
+				send(funnynames[math.random(1,#funnynames)], "text", player.UserId, "")
+				wait(0.2)
+				output(funnynames[math.random(1,#funnynames)])
+				wait()
+			end
 		elseif string.sub(command, 1, 7) == "/image " then
 			local split = string.split(string.sub(command, 8, -1), " ")
 			local id = split[1]
@@ -367,6 +384,8 @@ local _arg0 = function(player)
 			output("/switch [name] - switch to another channel")
 			output("/keys [name] - confirm keys with someone")
 			output("/private [name] [msg] - send a private message to someone [requires keys]")
+			output("/systemsend [message] - testing fake system messages [DEPRECATED DUE TO DECREASING PERFORMANCE]")
+			output("secret messages ;)")
 			output("---------------------------------------------------")
 		elseif string.sub(command, 1, 8) == "/switch " then
 			channel = string.sub(command, 9, -1)
@@ -391,7 +410,7 @@ local _arg0 = function(player)
 			send(tostring(id), "ping", player.UserId, comment)
 		elseif string.sub(command, 1, 5) == "/list" then
 			output("------- list -------")
-			output("")
+			output("default")
 			output("coop")
 			output("memes")
 			output("scripting")
@@ -399,6 +418,7 @@ local _arg0 = function(player)
 			output("questions")
 			output("townhall")
 			output("news")
+			output("general")
 			output("--------------------")
 		elseif string.sub(command, 1, 6) == "/keys " then
 			local split = string.split(string.sub(command, 7, -1), " ")
@@ -436,6 +456,7 @@ local _arg0 = function(player)
 		end
 	end)
 end
+output("hmm1x edited this")
 -- ▼ ReadonlyArray.forEach ▼
 for _k, _v in ipairs(_exp) do
 	_arg0(_v, _k - 1, _exp)
