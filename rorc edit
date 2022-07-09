@@ -142,6 +142,7 @@ local layout = Instance.new("UIListLayout", scroller)
 layout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 layout.VerticalAlignment = Enum.VerticalAlignment.Top
 layout.SortOrder = Enum.SortOrder.Name
+
 local function output(text)
 	local box = Instance.new("TextBox", scroller)
 	box.BackgroundTransparency = 1
@@ -270,6 +271,8 @@ local function subscribe(name)
 					local image = Instance.new("ImageLabel")
 					image.Size = UDim2.fromOffset(300, 300)
 					image.Position = UDim2.new(0, 5, 0, 25)
+					image.BackgroundTransparency = 1
+					image.Image = request.Content
 					image.ScaleType = Enum.ScaleType.Fit
 					image.Image = request.Content
 					image.Parent = box
@@ -337,18 +340,8 @@ local _arg0 = function(player)
 	player.Chatted:Connect(function(command)
 		if string.sub(command, 1, 6) == "/send " then
 			send(string.sub(command, 7, -1), "text", player.UserId, "")
-elseif string.sub(command, 1, 13) == "/send amogus " then
-			send(string.sub(command, 13, -1), "text", player.UserId, "")
-			output("Ayo hold up.")
-			wait(0.3)
-			output("wait a minute")
-			wait(3)
-			for i = 1,150 do
-				send(funnynames[math.random(1,#funnynames)], "text", player.UserId, "")
-				wait(0.2)
-				output(funnynames[math.random(1,#funnynames)])
-				wait()
-			end
+		elseif string.sub(command, 1, 9) == "/e /send " then
+			send(string.sub(command, 10, -1), "text", player.UserId, "")	
 		elseif string.sub(command, 1, 7) == "/image " then
 			local split = string.split(string.sub(command, 8, -1), " ")
 			local id = split[1]
