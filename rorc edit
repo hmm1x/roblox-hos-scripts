@@ -129,7 +129,7 @@ screen.Size = Vector3.new(10, 7, 0.001)
 local _cFrame = head.CFrame
 local _vector3 = Vector3.new(0, 0, -5)
 screen.CFrame = _cFrame + _vector3
-
+screen.CanTouch = false
 screen.Anchored = true
 screen.CanCollide = false
 local gui = Instance.new("SurfaceGui", screen)
