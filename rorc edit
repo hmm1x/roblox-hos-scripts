@@ -378,7 +378,7 @@ local _arg0 = function(player)
 			output("/keys [name] - confirm keys with someone")
 			output("/private [name] [msg] - send a private message to someone [requires keys]")
 			output("/systemsend [message] - testing fake system messages [DEPRECATED DUE TO DECREASING PERFORMANCE]")
-			output("secret messages ;)")
+			output("/e /send [message] - silent sending messages (no chat flood)")
 			output("---------------------------------------------------")
 		elseif string.sub(command, 1, 8) == "/switch " then
 			channel = string.sub(command, 9, -1)
