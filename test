@@ -451,7 +451,7 @@ function shoot()
 		
 		Beam_.Name = randomstring(90)
 		Beam_.Texture = "rbxassetid://788718095"
-		game:GetService("TweenService"):Create(Beam_,TweenInfo.new(2,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Transparency = 1}):Play()
+		
 		local attach0 = Instance.new("Attachment", Torso)
 		attach0.Name = randomstring(90)
 		local att1 = Instance.new("SpawnLocation", woldr)
