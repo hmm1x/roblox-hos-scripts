@@ -389,6 +389,7 @@ coroutine.resume(coroutine.create(function()
 		LeftArm.Color = Color3.new(math.random(),math.random(), math.random())
 		wait(0.2)
 		woldr:Destroy()
+		refit_Model()
 		wait(math.random(8,13))
 	end
 end))
