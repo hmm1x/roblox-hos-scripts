@@ -12,6 +12,9 @@ end
 local ID = Player.UserId
 local debris = game:GetService("Debris")
 local tween = game:GetService("TweenService")
+local versionz = 1.2
+print("Loaded funny dummy version "..versionz)
+
 local name2 = '>>'..Player.Name..'<<'
 local charr = Player.Character
 charr.Archivable=true
@@ -377,9 +380,15 @@ end)
 
 coroutine.resume(coroutine.create(function()
 	while true do
-		Head.Orientation = Vector3.new(math.random(-360,360),math.random(-360,360),math.random(-360,360))
-		wait(0.1)
-		head()
+		
+		Head.Color = Color3.new(math.random(),math.random(), math.random())
+		Torso.Color = Color3.new(math.random(),math.random(), math.random())
+		LeftLeg.Color = Color3.new(math.random(),math.random(), math.random())
+		RightArm.Color = Color3.new(math.random(),math.random(), math.random())
+		RightLeg.Color = Color3.new(math.random(),math.random(), math.random())
+		LeftArm.Color = Color3.new(math.random(),math.random(), math.random())
+		wait(0.2)
+		woldr:Destroy()
 		wait(math.random(8,13))
 	end
 end))
