@@ -85,7 +85,7 @@ local worldmodel = Instance.new("WorldModel", workspace)	worldmodel.Name = strin
 local model = Instance.new("Model",worldmodel) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='Plastic' Torso.Transparency=0 Torso.Reflectance=0 Torso.Name='Torso'
 local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Plastic' Head.Transparency=0 Head.Reflectance=0
-Mesh:Clone().Parent=Head face:Clone().Parent=Head
+
 local LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='Plastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0
 local RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false RightLeg.Material='Plastic' RightLeg.Transparency=0 RightLeg.Reflectance=0
 local LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true LeftArm.Material='Plastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0
