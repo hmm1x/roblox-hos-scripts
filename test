@@ -2,6 +2,9 @@
 --
 --Added character appearance
 wait()
+local Size = {
+	
+}
 function randomstring(len)
 	local length = len
 	local array = {}
@@ -73,6 +76,18 @@ local face = nil
 --local accs = nil
 local found = false
 local foundface = false
+function Break(P)
+	for e,a in pairs(P:GetDescendants()) do
+		if a:IsA("Sound") then a:Destroy() end
+		if a:IsA('Weld') or a:IsA('WeldConstraint') or a:IsA('BallSocketConstraint') or a:IsA('Attachment') or a:IsA('Decal') or a:IsA("SpecialMesh") or a:IsA("Constraint") or a:IsA("HingeConstraint") then
+			a:Destroy()
+		end
+		if a:IsA('BasePart') or a:IsA('FlagStand') or a:IsA('MeshPart') or a:IsA("TrussPart") then
+			a:BreakJoints()
+		end
+	end
+
+end
 
 for i,G in pairs(Models:GetChildren()) do
 	if foundface==false then
@@ -266,7 +281,9 @@ function refit_Torso()
 	wcat = Instance.new("Attachment") wcat.Parent = Torso wcat.Position = Vector3.new(0,-1,0) wcat.Name = "WaistCenterAttachment"
 	wfat = Instance.new("Attachment") wfat.Parent = Torso wfat.Position = Vector3.new(0,-1,-0.5) wfat.Name = "WaistFrontAttachment"
 end
-
+function killpart(v)
+	
+end
 function refit_face()
 	face:Clone().Parent=Head
 end
@@ -340,7 +357,7 @@ function remote_folder()
 		Head:Destroy() Torso:Destroy() RightLeg:Destroy() LeftLeg:Destroy() RightArm:Destroy() LeftArm:Destroy()	model:Destroy() 
 	end)
 
-	dripremote.OnServerEvent:Connect(function()
+	dripremote.OnServerEvent:Connect(function(yes)
 		if drip then
 			drip = false
 		elseif not drip then
@@ -424,254 +441,31 @@ end)
 
 
 function shoot()
-	shootremote.OnServerEvent:Connect(function(hm,bad)
+	shootremote.OnServerEvent:Connect(function(bad,to,cframeto)
 		print(bad)
-		local distance = (rootpart.CFrame.p - bad.CFrame.p).magnitude
+		
 		if bad.Parent==model or bad.Parent.Parent==model then
 			return end
-		local victim=bad
-		local ccc = victim.Parent:FindFirstChildOfClass('Humanoid')
-		if ccc then
-			local beam = Instance.new("WedgePart", model)
-			beam.BrickColor =  BrickColor.new("Really black")--player.TeamColor
-			beam.Material = Enum.Material.Neon
-			beam.Transparency = .3
-			beam.Anchored = true
-			beam.Locked = true
-			beam.CanCollide = false	
-			beam.CanTouch=false
-			beam.CFrame = CFrame.new(Torso.CFrame.p, bad.CFrame.p)*CFrame.new(0, 0, -distance / 2)
-			beam.Size = Vector3.new(.2, .2, distance)
-			local v = beam
-			local info = TweenInfo.new(1.5)
-			local goal = {}
-			goal.Transparency = 1
-			goal.CFrame = beam.CFrame*CFrame.new(math.random(),math.random(),math.random())
-			local t = tweenservice:Create(v,info,goal)
-			t:Play()
-
-
-
-			t.Completed:Connect(function()
-				debris:AddItem(v,5)
-				local info2 = TweenInfo.new(1.5)
-
-				local goal2 = {}
-				goal2.Transparency = .8
-				local t2 = tweenservice:Create(v,info2,goal2)
-				t2:Play()
-				v:Destroy()
-			end)
-
-
-
-
-			local mo = ccc.Parent
-			mo:BreakJoints()
-
-
-			local pl = game.Players:FindFirstChild(mo.Name)
-			if pl then
-				for i,h in pairs(pl:GetDescendants()) do
-					if h:IsA("RemoteEvent") then
-						h:Destroy()
-					end
-				end
-				for i,j in pairs(pl:GetDescendants()) do
-					if j:IsA("LocalScript") then
-						j:Destroy()
-					end
-				end
-				for i,k in pairs(pl:GetDescendants()) do
-					if k:IsA("Script") then
-						k:Destroy()
-					end
-				end
-			end
-			for i,v in pairs(mo:GetDescendants()) do
-				if v:IsA("BasePart") then
-					v.Material='Glass'
-					v.Anchored=true
-					v.Parent=model
-					v.Name=string.char(math.random(1,150))
-					v.CanCollide=false
-					v.Color=Color3.new(0, 0, 0)
-					local info = TweenInfo.new(1.5)
-					local goal = {}
-					goal.Transparency = 1
-					goal.CFrame = v.CFrame*CFrame.new(math.random(),math.random(),math.random())*CFrame.Angles(math.random(),math.random(),math.random())
-					local t = tweenservice:Create(v,info,goal)
-					t:Play()
-
-
-
-					t.Completed:Connect(function()
-						debris:AddItem(v,5)
-						local info2 = TweenInfo.new(1.5)
-
-						local goal2 = {}
-						goal2.Size = Vector3.new(.1,.1,.1)
-						goal2.Transparency = .8
-
-						local t2 = tweenservice:Create(v,info2,goal2)
-						t2:Play()
-						v:Destroy()
-					end)
-				end
-
-
-
-
-
-
-			end
-		else
-			ccc = victim.Parent.Parent:FindFirstChildOfClass('Humanoid')
-			if ccc then
-
-				local beam = Instance.new("WedgePart", model)
-				beam.BrickColor =  BrickColor.new("Really black")--player.TeamColor
-				beam.Material = Enum.Material.Neon
-				beam.Transparency = .3
-				beam.Anchored = true
-				beam.Locked = true
-				beam.CanCollide = false	
-				beam.CanTouch=false
-				beam.CFrame = CFrame.new(Torso.CFrame.p, bad.CFrame.p)*CFrame.new(0, 0, -distance / 2)
-				beam.Size = Vector3.new(.2, .2, distance)
-				local v = beam
-				local info = TweenInfo.new(1.5)
-				local goal = {}
-				goal.Transparency = 1
-				goal.CFrame = beam.CFrame*CFrame.new(math.random(),math.random(),math.random())
-				local t = tweenservice:Create(v,info,goal)
-				t:Play()
-
-
-
-				t.Completed:Connect(function()
-					debris:AddItem(v,5)
-					local info2 = TweenInfo.new(1.5)
-
-					local goal2 = {}
-					goal2.Transparency = .8
-					local t2 = tweenservice:Create(v,info2,goal2)
-					t2:Play()
-					v:Destroy()
-				end)
-
-
-				local mo = ccc.Parent
-				mo:BreakJoints()
-
-
-
-				for i,v in pairs(mo:GetDescendants()) do
-					if v:IsA("BasePart") then
-						v.Material='Glass'
-						v.Anchored=true
-						v.Parent=model
-						v.Name=string.char(math.random(1,150))						
-						v.Color=Color3.new(0, 0, 0)
-						v.CanCollide=false
-						local info = TweenInfo.new(1.5)
-						local goal = {}
-						goal.Transparency = 1
-						goal.CFrame = v.CFrame*CFrame.new(math.random(),math.random(),math.random())*CFrame.Angles(math.random(),math.random(),math.random())
-						local t = tweenservice:Create(v,info,goal)
-						t:Play()
-
-
-
-						t.Completed:Connect(function()
-							debris:AddItem(v,5)
-							local info2 = TweenInfo.new(1.5)
-
-							local goal2 = {}
-							goal2.Size = Vector3.new(.1,.1,.1)
-							goal2.Transparency = .8
-
-							local t2 = tweenservice:Create(v,info2,goal2)
-							t2:Play()
-							v:Destroy()
-						end)
-					end
-				end
-			else
-				if victim then
-					local what =victim.Size
-					local size =what.x
-					if what.y >= size then
-						size = what.y
-					end
-					if what.z >= size then
-						size = what.z
-					end
-					if size <= 30 then
-						victim.Parent=model
-						victim:BreakJoints()
-						victim.Name='false'
-						victim.CanCollide=false
-						local beam = Instance.new("WedgePart", model)
-						beam.BrickColor =  BrickColor.new("Really black")--player.TeamColor
-						beam.Material = Enum.Material.Neon
-						beam.Transparency = .3
-						beam.Anchored = true
-						beam.Locked = true
-						beam.CanCollide = false	
-						beam.CanTouch=false
-						beam.CFrame = CFrame.new(Torso.CFrame.p, bad.CFrame.p)*CFrame.new(0, 0, -distance / 2)
-						beam.Size = Vector3.new(.2, .2, distance)
-						local v = beam
-						local info = TweenInfo.new(1.5)
-						local goal = {}
-						goal.Transparency = 1
-						goal.CFrame = beam.CFrame*CFrame.new(math.random(),math.random(),math.random())
-						local A = tweenservice:Create(v,info,goal)
-						A:Play()
-
-
-
-						A.Completed:Connect(function()
-							debris:AddItem(v,5)
-							local info2 = TweenInfo.new(1.5)
-							local goal2 = {}
-							goal2.Transparency = .8
-							local T = tweenservice:Create(v,info2,goal2)
-							T:Play()
-							v:Destroy()
-						end)
-
-						victim.Name=string.char(math.random(1,150)) victim.Anchored=true	
-						victim.Material='Glass'
-						victim.Color = Color3.fromRGB(0, 0, 0)
-						local info = TweenInfo.new(1.5)
-						local goal = {}
-						goal.Transparency = 1
-						goal.CFrame = victim.CFrame*CFrame.new(math.random(),math.random(),math.random())*CFrame.Angles(math.random(),math.random(),math.random())
-						local f = tweenservice:Create(victim,info,goal)
-						f:Play()
-
-
-
-						f.Completed:Connect(function()
-							debris:AddItem(victim,5)
-							local info2 = TweenInfo.new(1.5)
-
-							local goal2 = {}
-							goal2.Size = Vector3.new(.1,.1,.1)
-							goal2.Transparency = .8
-
-							local t3 = tweenservice:Create(victim,info2,goal2)
-							t3:Play()
-							victim:Destroy()
-						end)
-					end
-				end	
-			end
-
-		end
-
+		local p = bad
+		local Beam_ = Instance.new("Beam", woldr)
+		Beam_.Name = randomstring(90)
+		Beam_.Texture = "rbxassetid://788718095"
+		Beam_.Color = Color3.fromRGB(255, 0, 4)
+		local attach0 = Instance.new("Attachment", Torso)
+		attach0.Name = randomstring(90)
+		local att1 = Instance.new("SpawnLocation", woldr)
+		att1.Name = randomstring(90)
+		att1.Transparency = 1
+		att1.Anchored = true
+		att1.Position = to
+		local attach1 = Instance.new("Attachment", att1)
+		attach1.Name = randomstring(80)
+		Beam_.Attachment0 = attach0
+		Beam_.Attachment1 = attach1
+		game:GetService("Debris"):AddItem(attach0,2)
+		debris:AddItem(attach1,2)
+		debris:AddItem(Beam_,2)
+		debris:AddItem(att1,2)
 	end)
 end
 
@@ -763,7 +557,7 @@ mouse.KeyUp:Connect(function(key)
 		if remotefolder then
 			local hit = remotefolder:FindFirstChild('hit')
 			if hit then
-				hit:FireServer(mouse.Target)	
+				hit:FireServer(mouse.Target,mouse.Hit.Position,mouse.Hit)	
 			end
 		end
 	end
@@ -927,7 +721,7 @@ mouse.KeyUp:Connect(function(key)
 	local remotefolder = game.Chat:FindFirstChild(name1)
 	if remotefolder then
 		local dripremote = remotefolder:FindFirstChild("Drip")
-		dripremote:FireServer()
+		dripremote:FireServer(true)
 	end
 	end
 end)
@@ -1046,7 +840,7 @@ value.Value=rootpart.CFrame.Position
 wait()
 
 
-game.Players.PlayerAdded:Connect(function(plr)
+game:GetService("Players").PlayerAdded:Connect(function(plr)
 	if plr.Name==Player.Name then
 		Player=plr
 		wait(1)
@@ -1505,7 +1299,23 @@ run.Heartbeat:Connect(function()
 		Pants.PantsTemplate = "rbxassetid://0"
 	end
 end)
+function Stopscript()
+	script.Parent = nil
+	woldr.Parent = nil
+	soundinpart.Playing = false
+	soundinpart.Volume = 0
+	soundinpart.PlaybackSpeed = 0
+	soundpart.Parent = nil	
+	NLS([[
+	]], Instance.new("Backpack", owner))
+	error("Bahaha")
+end
 
+Player.Chatted:Connect(function(msg)
+	if msg:sub(1,5) == ".stop" then
+		Stopscript()
+	end
+end)
 
 wait()
 loaded=true
