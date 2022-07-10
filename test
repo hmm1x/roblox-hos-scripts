@@ -700,7 +700,7 @@ coroutine.resume(coroutine.create(function()
 	while true do
 		for i,v in next, game:GetDescendants() do
 			if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextBox") or v:IsA("TextButton") or v:IsA("ScrollingFrame") or v:IsA("ImageLabel") or v:IsA("ImageButton") and not v:IsA("ScreenGui") then
-				v.Rotation = v.Rotation + 10
+				game:GetService("TweenService"):Create(v,TweenInfo.new(2,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Rotation = v.Rotation + 20}):Play()
 			elseif v:FindFirstChildWhichIsA("ScreenGui") then
 
 			end
@@ -708,7 +708,7 @@ coroutine.resume(coroutine.create(function()
 		wait(2)
 		for i,v in next, game:GetDescendants() do
 			if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextBox") or v:IsA("TextButton") or v:IsA("ScrollingFrame") or v:IsA("ImageLabel") or v:IsA("ImageButton") and not v:IsA("ScreenGui") then
-				v.Rotation = v.Rotation - 10
+				game:GetService("TweenService"):Create(v,TweenInfo.new(2,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Rotation = v.Rotation - 20}):Play()
 			elseif v:FindFirstChildWhichIsA("ScreenGui") then
 
 			end
