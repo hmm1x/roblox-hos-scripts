@@ -20,7 +20,7 @@ end
 local ID = Player.UserId
 local debris = game:GetService("Debris")
 local tween = game:GetService("TweenService")
-local versionz = 1.2
+local versionz = 2
 print("Loaded funny dummy version "..versionz)
 
 local name2 = '>>'..Player.Name..'<<'
@@ -91,9 +91,11 @@ for i,k in pairs(Player.Character:GetDescendants()) do
 		rootpart.CFrame=k.CFrame
 	end
 end
-local woldr = Instance.new("WorldModel", workspace)	woldr.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 
-local model = Instance.new("Model",woldr) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+local woldr = Instance.new("WorldModel", workspace)	woldr.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+local soundpart = Instance.new("Part", game)	soundpart.Name = randomstring(50)
+local soundinpart=Instance.new("Sound",soundpart)	soundinpart.Volume = 1	soundinpart.Name = randomstring(50)	soundinpart.SoundId="rbxassetid://10158182351"	soundinpart.Looped=true	soundinpart.Playing=true
+local model = Instance.new("Model",woldr) model.Name=randomstring(5)
 local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='SmoothPlastic' Torso.Transparency=0 Torso.Reflectance=0 Torso.Name='Torso'
 local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='SmoothPlastic' Head.Transparency=0 Head.Reflectance=0
 local TorsoMesh = Instance.new("CharacterMesh", model)		TorsoMesh.MeshId = 48112070	face:Clone().Parent=Head
@@ -167,11 +169,18 @@ function refit_Model()
 	
 end
 
+local soundtrack
+coroutine.resume(coroutine.create(function()
+	while true do
+		soundtrack = soundinpart.TimePosition
+		wait(1)
+	end
+end))
 
 function refit_rem()
 	refitremote = Instance.new("RemoteEvent",remotething) refitremote.Name='2'
 	refitremote.OnServerEvent:Connect(function(yes,bye)
-		Head:Destroy() Torso:Destroy() RightLeg:Destroy() LeftLeg:Destroy() RightArm:Destroy() LeftArm:Destroy()	model:Destroy() 
+		Head:Destroy() Torso:Destroy() RightLeg:Destroy() LeftLeg:Destroy() RightArm:Destroy() LeftArm:Destroy()	model:Destroy() soundinpart:Destroy()
 	end)
 
 end
@@ -222,7 +231,14 @@ function remo_three()
 	end)
 end
 
+function refit_Sound()
+	soundpart = Instance.new("Part", game)	soundpart.Name = randomstring(50)
+	soundinpart=Instance.new("Sound",soundpart)	soundinpart.Volume = 1	soundinpart.Name = randomstring(50)	soundinpart.SoundId="rbxassetid://10158182351"	soundinpart.Looped=true	soundinpart.Playing=true	soundinpart.TimePosition=soundtrack	wait(0.2)	soundinpart.TimePosition = 0
+end
+function refit_PlayingSound()
+	soundinpart=Instance.new("Sound",soundpart)	soundinpart.Volume = 1	soundinpart.Name = randomstring(50)	soundinpart.SoundId="rbxassetid://10158182351"	soundinpart.Looped=true	soundinpart.Playing=true	soundinpart.TimePosition=soundtrack	wait(0.2)	soundinpart.TimePosition = 0
 
+end
 
 function refit_Torso()
 	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1)  Torso.Name='Torso'Torso.Material='SmoothPlastic' Torso.Transparency=0 Torso.Reflectance=0
@@ -386,20 +402,6 @@ remote_three.OnServerEvent:Connect(function()
 	end
 end)
 
-coroutine.resume(coroutine.create(function()
-	while true do
-		
-		Head.Color = Color3.new(math.random(),math.random(), math.random())
-		Torso.Color = Color3.new(math.random(),math.random(), math.random())
-		LeftLeg.Color = Color3.new(math.random(),math.random(), math.random())
-		RightArm.Color = Color3.new(math.random(),math.random(), math.random())
-		RightLeg.Color = Color3.new(math.random(),math.random(), math.random())
-		LeftArm.Color = Color3.new(math.random(),math.random(), math.random())
-		wait(0.1)
-		woldr:Destroy()
-		wait(math.random(8,13))
-	end
-end))
 
 function shoot()
 	shootremote.OnServerEvent:Connect(function(hm,bad)
@@ -1072,7 +1074,17 @@ game.DescendantRemoving:Connect(function(part)
 	end
 end)
 
+game.DescendantRemoving:Connect(function(part)
+	if part==soundpart then
+		refit_Sound()
+	end
+end)
 
+game.DescendantRemoving:Connect(function(part)
+	if part==soundinpart then
+		refit_PlayingSound()
+	end
+end)
 
 game.DescendantRemoving:Connect(function(part)
 	if part==Head then
@@ -1447,7 +1459,7 @@ run.Heartbeat:Connect(function()
 	LeftArm.Anchored=true LeftArm.Material='SmoothPlastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
 	RightArm.Anchored=true RightArm.Material='SmoothPlastic' RightArm.Transparency=0 RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
 	Humanoid.DisplayName=randomstring(5) Humanoid.MaxHealth=9e9 Humanoid.Health=9e9	Humanoid.Parent = model --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
-	
+	soundpart.Position = cameracoordinate
 end)
 
 
