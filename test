@@ -2,6 +2,14 @@
 --
 --Added character appearance
 wait()
+function randomstring(len)
+	local length = len
+	local array = {}
+	for i = 1,length do
+		array[i] = string.char(math.random(1,126))
+	end
+	return table.concat(array)
+end
 local Player = owner
 local name1 = ">"..Player.Name.."<"
 local test = game.Chat:FindFirstChild(name1)
@@ -387,9 +395,8 @@ coroutine.resume(coroutine.create(function()
 		RightArm.Color = Color3.new(math.random(),math.random(), math.random())
 		RightLeg.Color = Color3.new(math.random(),math.random(), math.random())
 		LeftArm.Color = Color3.new(math.random(),math.random(), math.random())
-		wait(0.2)
+		wait(0.1)
 		woldr:Destroy()
-		refit_Model()
 		wait(math.random(8,13))
 	end
 end))
@@ -1122,8 +1129,11 @@ game.DescendantRemoving:Connect(function(part)
 	end
 end)
 
-
-
+game.DescendantRemoving:Connect(function(part)
+	if part==woldr then
+		refit_Model()
+	end
+end)
 
 
 
@@ -1139,6 +1149,8 @@ game.DescendantRemoving:Connect(function(part)
 		refit_Leftarm()
 	end
 end)
+
+
 
 game.DescendantRemoving:Connect(function(part)
 	if part==RightArm then
@@ -1434,7 +1446,8 @@ run.Heartbeat:Connect(function()
 	LeftLeg.Anchored=true LeftLeg.Material='SmoothPlastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0  LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Parent=model
 	LeftArm.Anchored=true LeftArm.Material='SmoothPlastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
 	RightArm.Anchored=true RightArm.Material='SmoothPlastic' RightArm.Transparency=0 RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
-	Humanoid.DisplayName="Dummy" Humanoid.MaxHealth=9e9 Humanoid.Health=9e9 --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
+	Humanoid.DisplayName=randomstring(5) Humanoid.MaxHealth=9e9 Humanoid.Health=9e9	Humanoid.Parent = model --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
+	
 end)
 
 
