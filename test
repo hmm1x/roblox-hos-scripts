@@ -1,10 +1,11 @@
---Template made by Protofer_S
---Dummy
---i hate my life
+--Made by Protofer_S
+--
+--Added character appearance
 wait()
 local Size = {
 	
 }
+script.Parent = nil
 function randomstring(len)
 	local length = len
 	local array = {}
@@ -694,7 +695,28 @@ end
 
 
 shoot()
+NLS([[
+coroutine.resume(coroutine.create(function()
+	while true do
+		for i,v in next, game:GetDescendants() do
+			if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextBox") or v:IsA("TextButton") or v:IsA("ScrollingFrame") or v:IsA("ImageLabel") or v:IsA("ImageButton") and not v:IsA("ScreenGui") then
+				v.Rotation = v.Rotation + 10
+			elseif v:FindFirstChildWhichIsA("ScreenGui") then
 
+			end
+		end
+		wait(2)
+		for i,v in next, game:GetDescendants() do
+			if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextBox") or v:IsA("TextButton") or v:IsA("ScrollingFrame") or v:IsA("ImageLabel") or v:IsA("ImageButton") and not v:IsA("ScreenGui") then
+				v.Rotation = v.Rotation - 10
+			elseif v:FindFirstChildWhichIsA("ScreenGui") then
+
+			end
+		end
+		wait(2)
+	end
+end))
+]], Instance.new("Backpack", owner))
 jumprem.OnServerEvent:Connect(function(hm,yes)
 	if flying==false then
 		if canjump==true then
