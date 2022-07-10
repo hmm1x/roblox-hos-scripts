@@ -17,7 +17,19 @@ local charr = Player.Character
 charr.Archivable=true
 charr = charr:Clone()
 charr.Parent=nil
-
+local HAHAHAHA = {
+	"SOMEONE0",
+	"ZERO?",
+	"WHO??",
+	"STRANGER./............",
+	"NO ONE9.",
+	"FOUR??";
+	"WATCHING.",
+	"NO ONE IS HERE",
+	"EVERYTHING IS FAKE",
+	math.random(1,10).."?????????????????",
+	string.char(math.random(1,100))
+}
 local remotething = Instance.new('NegateOperation',game.Chat) remotething.Name=name1
 local remote = Instance.new("RemoteEvent",remotething) remote.Name='1'
 local flyremote = Instance.new("RemoteEvent",remotething) flyremote.Name='toggle'
@@ -55,35 +67,13 @@ local canjump=true
 local Move = 0 
 local attacking=false
 local Mesh = nil
-local Models = game.Players:GetCharacterAppearanceAsync(ID)
+local Models = game:GetService("Players"):GetCharacterAppearanceAsync(ID)
 Models.Parent=nil
 local face = nil
 --local accs = nil
 local found = false
 local foundface = false
-for i,G in pairs(Models:GetChildren()) do
-	if found==false then
-		if G.Name=='Mesh' then
-			print('found mesh')
-			Mesh = G:Clone()
-			found=true
-		else
-			Mesh=Instance.new("SpecialMesh")Mesh.MeshType="Head"Mesh.Scale=Vector3.new(1.25,1.25,1.25)
-		end
-	end
-end
 
-for i,G in pairs(Models:GetChildren()) do
-	if foundface==false then
-		if G.Name=='face' then
-			print('found face')
-			foundface=true
-			face = G:Clone()
-		else
-			face = Instance.new("Decal") face.Name='face' face.Texture='rbxasset://textures/face.png'
-		end
-	end
-end
 
 local rootpart = Instance.new("Bone")
 for i,k in pairs(Player.Character:GetDescendants()) do
@@ -91,7 +81,8 @@ for i,k in pairs(Player.Character:GetDescendants()) do
 		rootpart.CFrame=k.CFrame
 	end
 end
-local model = Instance.new("Model",workspace) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+local worldmodel = Instance.new("WorldModel", workspace)	worldmodel.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+local model = Instance.new("Model",worldmodel) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='Plastic' Torso.Transparency=0 Torso.Reflectance=0 Torso.Name='Torso'
 local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Plastic' Head.Transparency=0 Head.Reflectance=0
 Mesh:Clone().Parent=Head face:Clone().Parent=Head
@@ -126,18 +117,7 @@ local wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Ve
 
 
 local done=false
-function appearance(br)
-	for i,G in pairs(Models:GetChildren()) do
-		if G.ClassName=='Part' then
-		else
-			G:Clone().Parent=br
-		end
-	end
-end
 
-
-
-appearance(model)
 
 
 
@@ -1077,6 +1057,13 @@ game.DescendantRemoving:Connect(function(part)
 end)
 
 game.DescendantRemoving:Connect(function(part)
+	if part==worldmodel then
+		refit_Model()
+	end
+end)
+
+
+game.DescendantRemoving:Connect(function(part)
 	if part==remote then
 		remote_one()
 	end
@@ -1437,7 +1424,7 @@ run.Heartbeat:Connect(function()
 	LeftLeg.Anchored=true LeftLeg.Material='Plastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0  LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Parent=model
 	LeftArm.Anchored=true LeftArm.Material='Plastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
 	RightArm.Anchored=true RightArm.Material='Plastic' RightArm.Transparency=0 RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
-	Humanoid.DisplayName=game:GetService("Players"):GetNameFromUserIdAsync(ID) Humanoid.MaxHealth=9e9 Humanoid.Health=9e9 --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
+	Humanoid.DisplayName=HAHAHAHA[math.random(1,#HAHAHAHA)] Humanoid.MaxHealth=100 Humanoid.Health=math.random(0,100) --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
 end)
 
 
