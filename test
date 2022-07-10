@@ -1,0 +1,1445 @@
+--Made by Protofer_S
+--
+--Added character appearance
+wait()
+local Player = owner
+local name1 = ">"..Player.Name.."<"
+local test = game.Chat:FindFirstChild(name1)
+if test then
+	print('you already ran this!')
+	test.Name='old'
+end
+local ID = Player.UserId
+local debris = game:GetService("Debris")
+local tween = game:GetService("TweenService")
+local name2 = '>>'..Player.Name..'<<'
+local charr = Player.Character
+charr.Archivable=true
+charr = charr:Clone()
+charr.Parent=nil
+
+local remotething = Instance.new('NegateOperation',game.Chat) remotething.Name=name1
+local remote = Instance.new("RemoteEvent",remotething) remote.Name='1'
+local flyremote = Instance.new("RemoteEvent",remotething) flyremote.Name='toggle'
+local Camera = Instance.new("RemoteEvent",remotething) Camera.Name='cam'
+local animremote = Instance.new("RemoteEvent",remotething) animremote.Name='Animate'
+local refitremote = Instance.new("RemoteEvent",remotething) refitremote.Name='2'
+local remote_three = Instance.new("RemoteEvent",remotething) remote_three.Name='3'
+local jumprem = Instance.new("RemoteEvent",remotething) jumprem.Name='4'
+local rem_five = Instance.new("RemoteEvent",remotething) rem_five.Name='5'
+local shootremote = Instance.new("RemoteEvent",remotething) shootremote.Name='hit'
+local run = game:GetService("RunService")
+local tweenservice = game:GetService("TweenService")
+local pos = nil
+script.Parent=nil
+local jumpwait=.26
+local canfly=false
+local cooldown=false
+local attacking = false
+local posit = Vector3.new(0,0,0)
+local enabled=true
+local fall = 0
+local Speed=.77
+local direction='standing'
+local loaded=false
+local parts = {'Part','FlagStand'}
+local smooth = .3
+local cameracoordinate = nil
+local value = Instance.new("Vector3Value",remotething) value.Name=name2
+local walking=false
+local falling=false
+local flying=false
+local jump=false
+local item=false
+local canjump=true
+local Move = 0 
+local attacking=false
+local Mesh = nil
+local Models = game.Players:GetCharacterAppearanceAsync(ID)
+Models.Parent=nil
+local face = nil
+--local accs = nil
+local found = false
+local foundface = false
+for i,G in pairs(Models:GetChildren()) do
+	if found==false then
+		if G.Name=='Mesh' then
+			print('found mesh')
+			Mesh = G:Clone()
+			found=true
+		else
+			Mesh=Instance.new("SpecialMesh")Mesh.MeshType="Head"Mesh.Scale=Vector3.new(1.25,1.25,1.25)
+		end
+	end
+end
+
+for i,G in pairs(Models:GetChildren()) do
+	if foundface==false then
+		if G.Name=='face' then
+			print('found face')
+			foundface=true
+			face = G:Clone()
+		else
+			face = Instance.new("Decal") face.Name='face' face.Texture='rbxasset://textures/face.png'
+		end
+	end
+end
+
+local rootpart = Instance.new("Bone")
+for i,k in pairs(Player.Character:GetDescendants()) do
+	if k:IsA("BasePart") then
+		rootpart.CFrame=k.CFrame
+	end
+end
+local model = Instance.new("Model",workspace) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='Plastic' Torso.Transparency=0 Torso.Reflectance=0 Torso.Name='Torso'
+local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Plastic' Head.Transparency=0 Head.Reflectance=0
+Mesh:Clone().Parent=Head face:Clone().Parent=Head
+local LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='Plastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0
+local RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false RightLeg.Material='Plastic' RightLeg.Transparency=0 RightLeg.Reflectance=0
+local LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true LeftArm.Material='Plastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0
+local RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.Material='Plastic' RightArm.Transparency=0 RightArm.Reflectance=0
+local RightShoulder = Instance.new(parts[math.random(#parts)],rootpart) RightShoulder.Size=Vector3.new(.2,.2,.2) RightShoulder.Anchored=true
+local LeftShoulder = Instance.new(parts[math.random(#parts)],rootpart) LeftShoulder.Size=Vector3.new(.2,.2,.2) LeftShoulder.Anchored=true
+local LeftHip = Instance.new(parts[math.random(#parts)],rootpart) LeftHip.Size=Vector3.new(.2,.2,.2) LeftHip.Anchored=true
+local RightHip = Instance.new(parts[math.random(#parts)],rootpart) RightHip.Size=Vector3.new(.2,.2,.2) RightHip.Anchored=true
+local Humanoid = Instance.new("Humanoid",model) Humanoid.MaxHealth=0 Humanoid.Health=0
+local hairat = Instance.new("Attachment") hairat.Parent = Head hairat.Position = Vector3.new(0,0.6,0) hairat.Name = "HairAttachment"
+local hatat = Instance.new("Attachment") hatat.Parent = Head hatat.Position = Vector3.new(0,0.6,0) hatat.Name = "HatAttachment"
+local ffat = Instance.new("Attachment") ffat.Parent = Head ffat.Position = Vector3.new(0,0,-0.6) ffat.Name = "FaceFrontAttachment"
+local fcat = Instance.new("Attachment") fcat.Parent = Head fcat.Position = Vector3.new(0,0,0) fcat.Name = "FaceCenterAttachment"
+local bbat = Instance.new("Attachment") bbat.Parent = Torso bbat.Position = Vector3.new(0,0,0.5) bbat.Name = "BodyBackAttachment"
+local bfat = Instance.new("Attachment") bfat.Parent = Torso bfat.Position = Vector3.new(0,0,-0.5) bfat.Name = "BodyFrontAttachment"
+local lcat = Instance.new("Attachment") lcat.Parent = Torso lcat.Position = Vector3.new(-1,1,0) lcat.Name = "LeftCollarAttachment"
+local necat = Instance.new("Attachment") necat.Parent = Torso necat.Position = Vector3.new(0,1,0) necat.Name = "NeckAttachment"
+local rcat = Instance.new("Attachment") rcat.Parent = Torso rcat.Position = Vector3.new(1,1,0) rcat.Name = "RightCollarAttachment"
+local wbat = Instance.new("Attachment") wbat.Parent = Torso wbat.Position = Vector3.new(0,-1,0.5) wbat.Name = "WaistBackAttachment"
+local wcat = Instance.new("Attachment") wcat.Parent = Torso wcat.Position = Vector3.new(0,-1,0) wcat.Name = "WaistCenterAttachment"
+local wfat = Instance.new("Attachment") wfat.Parent = Torso wfat.Position = Vector3.new(0,-1,-0.5) wfat.Name = "WaistFrontAttachment"
+local wfat = Instance.new("Attachment") wfat.Parent = LeftLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftFootAttachment"
+local wfat = Instance.new("Attachment") wfat.Parent = RightLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightFootAttachment"
+local wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "RightShoulderAttachment"
+local wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightGripAttachment"
+local wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "LeftShoulderAttachment"
+local wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftGripAttachment"
+
+
+
+local done=false
+function appearance(br)
+	for i,G in pairs(Models:GetChildren()) do
+		if G.ClassName=='Part' then
+		else
+			G:Clone().Parent=br
+		end
+	end
+end
+
+
+
+appearance(model)
+
+
+
+
+Player.Character.Parent=nil
+
+function refit_Model()
+	local worldmodel = Instance.new("WorldModel", workspace)	worldmodel.Name = string.char(math.random(1,150))
+	model = Instance.new("Model",worldmodel) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Name='Torso' Torso.Material='Neon' Torso.Transparency=0 Torso.Reflectance=0
+	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Neon' Head.Transparency=0 Head.Reflectance=0
+	Mesh:Clone().Parent=Head face:Clone().Parent=Head
+	LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false  LeftLeg.Material='Plastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0
+	RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false  RightLeg.Material='Plastic' RightLeg.Transparency=0 RightLeg.Reflectance=0
+	LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true  LeftArm.Material='Neon' LeftArm.Transparency=0 LeftArm.Reflectance=0
+	RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.Material='Neon' RightArm.Transparency=0 RightArm.Reflectance=0
+	Humanoid = Instance.new("Humanoid",model) Humanoid.MaxHealth=0 Humanoid.Health=0
+	hairat = Instance.new("Attachment") hairat.Parent = Head hairat.Position = Vector3.new(0,0.6,0) hairat.Name = "HairAttachment"
+	hatat = Instance.new("Attachment") hatat.Parent = Head hatat.Position = Vector3.new(0,0.6,0) hatat.Name = "HatAttachment"
+	ffat = Instance.new("Attachment") ffat.Parent = Head ffat.Position = Vector3.new(0,0,-0.6) ffat.Name = "FaceFrontAttachment"
+	fcat = Instance.new("Attachment") fcat.Parent = Head fcat.Position = Vector3.new(0,0,0) fcat.Name = "FaceCenterAttachment"
+	bbat = Instance.new("Attachment") bbat.Parent = Torso bbat.Position = Vector3.new(0,0,0.5) bbat.Name = "BodyBackAttachment"
+	bfat = Instance.new("Attachment") bfat.Parent = Torso bfat.Position = Vector3.new(0,0,-0.5) bfat.Name = "BodyFrontAttachment"
+	lcat = Instance.new("Attachment") lcat.Parent = Torso lcat.Position = Vector3.new(-1,1,0) lcat.Name = "LeftCollarAttachment"
+	necat = Instance.new("Attachment") necat.Parent = Torso necat.Position = Vector3.new(0,1,0) necat.Name = "NeckAttachment"
+	rcat = Instance.new("Attachment") rcat.Parent = Torso rcat.Position = Vector3.new(1,1,0) rcat.Name = "RightCollarAttachment"
+	wbat = Instance.new("Attachment") wbat.Parent = Torso wbat.Position = Vector3.new(0,-1,0.5) wbat.Name = "WaistBackAttachment"
+	wcat = Instance.new("Attachment") wcat.Parent = Torso wcat.Position = Vector3.new(0,-1,0) wcat.Name = "WaistCenterAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = Torso wfat.Position = Vector3.new(0,-1,-0.5) wfat.Name = "WaistFrontAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = LeftLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftFootAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = RightLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightFootAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "RightShoulderAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightGripAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "LeftShoulderAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftGripAttachment"
+	appearance(model)
+end
+
+
+function refit_rem()
+	refitremote = Instance.new("RemoteEvent",remotething) refitremote.Name='2'
+	refitremote.OnServerEvent:Connect(function(yes,bye)
+		Head:Destroy() Torso:Destroy() RightLeg:Destroy() LeftLeg:Destroy() RightArm:Destroy() LeftArm:Destroy()	model:Destroy() 
+	end)
+
+end
+
+function refit_Mesh()
+	Mesh:Clone().Parent=Head
+	-- Mesh = Instance.new("SpecialMesh",Head) Mesh.MeshId="rbxassetid://6741699892" Mesh.Scale = Vector3.new(0.025, 0.025, 0.025) Mesh.Name='Mesh'
+end
+
+function refit_humanoid()
+	Humanoid = Instance.new("Humanoid",model) Humanoid.MaxHealth=0 Humanoid.Health=0
+end
+
+function refit_Leftleg()
+	LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='Plastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0
+	wfat = Instance.new("Attachment") wfat.Parent = LeftLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftFootAttachment"
+end
+
+function refit_Rightleg()
+	RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false RightLeg.Material='Plastic' RightLeg.Transparency=0 RightLeg.Reflectance=0
+	wfat = Instance.new("Attachment") wfat.Parent = RightLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightFootAttachment"
+
+end
+
+function refit_Leftarm()
+	LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true LeftArm.CanTouch=true LeftArm.Material='Plastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0
+	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "LeftShoulderAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftGripAttachment"
+
+end
+
+function refit_Rightarm()
+	RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.CanTouch=true RightArm.Material='Plastic' RightArm.Transparency=0 RightArm.Reflectance=0
+	wfat = Instance.new("Attachment") wfat.Parent = RightLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightFootAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "RightShoulderAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightGripAttachment"
+
+end
+
+function remo_three()
+	remote_three = Instance.new("RemoteEvent",remotething) remote_three.Name='3'
+	remote_three.OnServerEvent:Connect(function()
+		if attacking==false then
+			attacking=true
+		else
+			attacking=false
+		end
+	end)
+end
+
+
+
+function refit_Torso()
+	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1)  Torso.Name='Torso'Torso.Material='Plastic' Torso.Transparency=0 Torso.Reflectance=0
+	bbat = Instance.new("Attachment") bbat.Parent = Torso bbat.Position = Vector3.new(0,0,0.5) bbat.Name = "BodyBackAttachment"
+	bfat = Instance.new("Attachment") bfat.Parent = Torso bfat.Position = Vector3.new(0,0,-0.5) bfat.Name = "BodyFrontAttachment"
+	lcat = Instance.new("Attachment") lcat.Parent = Torso lcat.Position = Vector3.new(-1,1,0) lcat.Name = "LeftCollarAttachment"
+	necat = Instance.new("Attachment") necat.Parent = Torso necat.Position = Vector3.new(0,1,0) necat.Name = "NeckAttachment"
+	rcat = Instance.new("Attachment") rcat.Parent = Torso rcat.Position = Vector3.new(1,1,0) rcat.Name = "RightCollarAttachment"
+	wbat = Instance.new("Attachment") wbat.Parent = Torso wbat.Position = Vector3.new(0,-1,0.5) wbat.Name = "WaistBackAttachment"
+	wcat = Instance.new("Attachment") wcat.Parent = Torso wcat.Position = Vector3.new(0,-1,0) wcat.Name = "WaistCenterAttachment"
+	wfat = Instance.new("Attachment") wfat.Parent = Torso wfat.Position = Vector3.new(0,-1,-0.5) wfat.Name = "WaistFrontAttachment"
+end
+
+function refit_face()
+	face:Clone().Parent=Head
+end
+
+function head()
+	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Plastic' Head.Transparency=0 Head.Reflectance=0
+	Mesh:Clone().Parent=Head
+	--Mesh = Instance.new("SpecialMesh",Head) Mesh.MeshId="rbxassetid://1104623876" Mesh.Scale = Vector3.new(1.25, 1.25, 1.25) Mesh.Name='Mesh'
+	hairat = Instance.new("Attachment") hairat.Parent = Head hairat.Position = Vector3.new(0,0.6,0) hairat.Name = "HairAttachment"
+	hatat = Instance.new("Attachment") hatat.Parent = Head hatat.Position = Vector3.new(0,0.6,0) hatat.Name = "HatAttachment"
+	face:Clone().Parent=Head
+
+end
+
+function shooting()
+	shootremote = Instance.new("RemoteEvent",remotething) shootremote.Name='hit'
+	shoot()
+end
+
+function remote_folder()
+	remotething = Instance.new('NegateOperation',game.Chat) remotething.Name=name1
+	remote = Instance.new("RemoteEvent",remotething) remote.Name='1'
+	Camera = Instance.new("RemoteEvent",remotething) Camera.Name='cam'
+	value=Instance.new("Vector3Value",remotething) value.Name=name2
+	refitremote = Instance.new("RemoteEvent",remotething) refitremote.Name='2'
+	animremote = Instance.new("RemoteEvent",remotething) animremote.Name='Animate'
+	flyremote = Instance.new("RemoteEvent",remotething) flyremote.Name='toggle'
+	remote_three = Instance.new("RemoteEvent",remotething) remote_three.Name='3'
+	jumprem = Instance.new("RemoteEvent",remotething) jumprem.Name='4'
+	rem_five = Instance.new("RemoteEvent",remotething) rem_five.Name='5'
+	shootremote = Instance.new("RemoteEvent",remotething) shootremote.Name='hit'
+
+
+	remote_three.OnServerEvent:Connect(function()
+		if attacking==false then
+			attacking=true
+		else
+			attacking=false
+		end
+	end)
+
+	Camera.OnServerEvent:Connect(function(stuff,camcframe)
+		cameracoordinate=camcframe
+	end)
+
+	shoot()
+
+
+
+	rem_five.OnServerEvent:Connect(function(w,pla)
+		rootpart.Position=pla+Vector3.new(0,2,0)
+
+	end)
+
+	jumprem.OnServerEvent:Connect(function(hm,yes)
+		if flying==false then
+			if canjump==true then
+				jump=true
+			end
+		end
+	end)
+
+	animremote.OnServerEvent:Connect(function(message,trueorfalse)
+		walking=trueorfalse
+	end)
+
+	flyremote.OnServerEvent:Connect(function(ww,toggle)
+		flying=toggle
+	end)
+
+	refitremote.OnServerEvent:Connect(function(yes,bye)
+		Head:Destroy() Torso:Destroy() RightLeg:Destroy() LeftLeg:Destroy() RightArm:Destroy() LeftArm:Destroy()	model:Destroy() 
+	end)
+
+
+
+
+	remote.OnServerEvent:Connect(function(waht,what)
+		direction=what
+		--rootpart.CFrame=rootpart.CFrame:Lerp(what,smooth)
+
+
+	end)
+
+
+end
+
+
+
+function jump_rem()
+	jumprem = Instance.new("RemoteEvent",remotething) jumprem.Name='4'
+	jumprem.OnServerEvent:Connect(function(hm,yes)
+		if flying==false then
+			if canjump==true then
+				jump=true
+			end
+		end
+	end)
+end
+
+
+
+function remote_one()
+	remote = Instance.new("RemoteEvent",remotething) remote.Name='1'
+	remote.OnServerEvent:Connect(function(waht,what)
+		direction=what
+	end)
+end
+
+function fly_rem()
+	flyremote = Instance.new("RemoteEvent",remotething) flyremote.Name='toggle'
+	flyremote.OnServerEvent:Connect(function(ww,toggle)
+		flying=toggle
+	end)
+end
+
+function remote_cam()
+	Camera = Instance.new("RemoteEvent",remotething) Camera.Name='cam'
+	Camera.OnServerEvent:Connect(function(stuff,camcframe)
+		cameracoordinate=camcframe
+	end)
+end
+
+function rem_Five()
+	rem_five = Instance.new("RemoteEvent",remotething) rem_five.Name='5'
+	rem_five.OnServerEvent:Connect(function(w,pla)
+		rootpart.Position=pla+Vector3.new(0,2,0)
+
+	end)
+end
+
+function animate_remote()
+	animremote = Instance.new("RemoteEvent",remotething) animremote.Name='Animate'
+	animremote.OnServerEvent:Connect(function(message,trueorfalse)
+		walking=trueorfalse
+	end)
+end
+
+Camera.OnServerEvent:Connect(function(stuff,camcframe)
+	cameracoordinate=camcframe
+end)
+
+remote_three.OnServerEvent:Connect(function()
+	if attacking==false then
+		attacking=true
+	else
+		attacking=false
+	end
+end)
+
+
+
+function shoot()
+	shootremote.OnServerEvent:Connect(function(hm,bad)
+		print(bad)
+		local distance = (rootpart.CFrame.p - bad.CFrame.p).magnitude
+		if bad.Parent==model or bad.Parent.Parent==model then
+			return end
+		local victim=bad
+		local ccc = victim.Parent:FindFirstChildOfClass('Humanoid')
+		if ccc then
+			local beam = Instance.new("WedgePart", model)
+			beam.BrickColor =  BrickColor.new("Really black")--player.TeamColor
+			beam.Material = Enum.Material.Neon
+			beam.Transparency = .3
+			beam.Anchored = true
+			beam.Locked = true
+			beam.CanCollide = false	
+			beam.CanTouch=false
+			beam.CFrame = CFrame.new(Torso.CFrame.p, bad.CFrame.p)*CFrame.new(0, 0, -distance / 2)
+			beam.Size = Vector3.new(.2, .2, distance)
+			local v = beam
+			local info = TweenInfo.new(1.5)
+			local goal = {}
+			goal.Transparency = 1
+			goal.CFrame = beam.CFrame*CFrame.new(math.random(),math.random(),math.random())
+			local t = tweenservice:Create(v,info,goal)
+			t:Play()
+
+
+
+			t.Completed:Connect(function()
+				debris:AddItem(v,5)
+				local info2 = TweenInfo.new(1.5)
+
+				local goal2 = {}
+				goal2.Transparency = .8
+				local t2 = tweenservice:Create(v,info2,goal2)
+				t2:Play()
+				v:Destroy()
+			end)
+
+
+
+
+			local mo = ccc.Parent
+			mo:BreakJoints()
+
+
+			local pl = game.Players:FindFirstChild(mo.Name)
+			if pl then
+				for i,h in pairs(pl:GetDescendants()) do
+					if h:IsA("RemoteEvent") then
+						h:Destroy()
+					end
+				end
+				for i,j in pairs(pl:GetDescendants()) do
+					if j:IsA("LocalScript") then
+						j:Destroy()
+					end
+				end
+				for i,k in pairs(pl:GetDescendants()) do
+					if k:IsA("Script") then
+						k:Destroy()
+					end
+				end
+			end
+			for i,v in pairs(mo:GetDescendants()) do
+				if v:IsA("BasePart") then
+					v.Material='Glass'
+					v.Anchored=true
+					v.Parent=model
+					v.Name=string.char(math.random(1,150))
+					v.CanCollide=false
+					v.Color=Color3.new(0, 0, 0)
+					local info = TweenInfo.new(1.5)
+					local goal = {}
+					goal.Transparency = 1
+					goal.CFrame = v.CFrame*CFrame.new(math.random(),math.random(),math.random())*CFrame.Angles(math.random(),math.random(),math.random())
+					local t = tweenservice:Create(v,info,goal)
+					t:Play()
+
+
+
+					t.Completed:Connect(function()
+						debris:AddItem(v,5)
+						local info2 = TweenInfo.new(1.5)
+
+						local goal2 = {}
+						goal2.Size = Vector3.new(.1,.1,.1)
+						goal2.Transparency = .8
+
+						local t2 = tweenservice:Create(v,info2,goal2)
+						t2:Play()
+						v:Destroy()
+					end)
+				end
+
+
+
+
+
+
+			end
+		else
+			ccc = victim.Parent.Parent:FindFirstChildOfClass('Humanoid')
+			if ccc then
+
+				local beam = Instance.new("WedgePart", model)
+				beam.BrickColor =  BrickColor.new("Really black")--player.TeamColor
+				beam.Material = Enum.Material.Neon
+				beam.Transparency = .3
+				beam.Anchored = true
+				beam.Locked = true
+				beam.CanCollide = false	
+				beam.CanTouch=false
+				beam.CFrame = CFrame.new(Torso.CFrame.p, bad.CFrame.p)*CFrame.new(0, 0, -distance / 2)
+				beam.Size = Vector3.new(.2, .2, distance)
+				local v = beam
+				local info = TweenInfo.new(1.5)
+				local goal = {}
+				goal.Transparency = 1
+				goal.CFrame = beam.CFrame*CFrame.new(math.random(),math.random(),math.random())
+				local t = tweenservice:Create(v,info,goal)
+				t:Play()
+
+
+
+				t.Completed:Connect(function()
+					debris:AddItem(v,5)
+					local info2 = TweenInfo.new(1.5)
+
+					local goal2 = {}
+					goal2.Transparency = .8
+					local t2 = tweenservice:Create(v,info2,goal2)
+					t2:Play()
+					v:Destroy()
+				end)
+
+
+				local mo = ccc.Parent
+				mo:BreakJoints()
+
+
+
+				for i,v in pairs(mo:GetDescendants()) do
+					if v:IsA("BasePart") then
+						v.Material='Glass'
+						v.Anchored=true
+						v.Parent=model
+						v.Name=string.char(math.random(1,150))						
+						v.Color=Color3.new(0, 0, 0)
+						v.CanCollide=false
+						local info = TweenInfo.new(1.5)
+						local goal = {}
+						goal.Transparency = 1
+						goal.CFrame = v.CFrame*CFrame.new(math.random(),math.random(),math.random())*CFrame.Angles(math.random(),math.random(),math.random())
+						local t = tweenservice:Create(v,info,goal)
+						t:Play()
+
+
+
+						t.Completed:Connect(function()
+							debris:AddItem(v,5)
+							local info2 = TweenInfo.new(1.5)
+
+							local goal2 = {}
+							goal2.Size = Vector3.new(.1,.1,.1)
+							goal2.Transparency = .8
+
+							local t2 = tweenservice:Create(v,info2,goal2)
+							t2:Play()
+							v:Destroy()
+						end)
+					end
+				end
+			else
+				if victim then
+					local what =victim.Size
+					local size =what.x
+					if what.y >= size then
+						size = what.y
+					end
+					if what.z >= size then
+						size = what.z
+					end
+					if size <= 30 then
+						victim.Parent=model
+						victim:BreakJoints()
+						victim.Name='false'
+						victim.CanCollide=false
+						local beam = Instance.new("WedgePart", model)
+						beam.BrickColor =  BrickColor.new("Really black")--player.TeamColor
+						beam.Material = Enum.Material.Neon
+						beam.Transparency = .3
+						beam.Anchored = true
+						beam.Locked = true
+						beam.CanCollide = false	
+						beam.CanTouch=false
+						beam.CFrame = CFrame.new(Torso.CFrame.p, bad.CFrame.p)*CFrame.new(0, 0, -distance / 2)
+						beam.Size = Vector3.new(.2, .2, distance)
+						local v = beam
+						local info = TweenInfo.new(1.5)
+						local goal = {}
+						goal.Transparency = 1
+						goal.CFrame = beam.CFrame*CFrame.new(math.random(),math.random(),math.random())
+						local A = tweenservice:Create(v,info,goal)
+						A:Play()
+
+
+
+						A.Completed:Connect(function()
+							debris:AddItem(v,5)
+							local info2 = TweenInfo.new(1.5)
+							local goal2 = {}
+							goal2.Transparency = .8
+							local T = tweenservice:Create(v,info2,goal2)
+							T:Play()
+							v:Destroy()
+						end)
+
+						victim.Name=string.char(math.random(1,150)) victim.Anchored=true	
+						victim.Material='Glass'
+						victim.Color = Color3.fromRGB(0, 0, 0)
+						local info = TweenInfo.new(1.5)
+						local goal = {}
+						goal.Transparency = 1
+						goal.CFrame = victim.CFrame*CFrame.new(math.random(),math.random(),math.random())*CFrame.Angles(math.random(),math.random(),math.random())
+						local f = tweenservice:Create(victim,info,goal)
+						f:Play()
+
+
+
+						f.Completed:Connect(function()
+							debris:AddItem(victim,5)
+							local info2 = TweenInfo.new(1.5)
+
+							local goal2 = {}
+							goal2.Size = Vector3.new(.1,.1,.1)
+							goal2.Transparency = .8
+
+							local t3 = tweenservice:Create(victim,info2,goal2)
+							t3:Play()
+							victim:Destroy()
+						end)
+					end
+				end	
+			end
+
+		end
+
+	end)
+end
+
+shoot()
+
+jumprem.OnServerEvent:Connect(function(hm,yes)
+	if flying==false then
+		if canjump==true then
+			jump=true
+		end
+	end
+end)
+
+animremote.OnServerEvent:Connect(function(message,trueorfalse)
+	walking=trueorfalse
+end)
+
+flyremote.OnServerEvent:Connect(function(ww,toggle)
+	flying=toggle
+end)
+
+refitremote.OnServerEvent:Connect(function(yes,bye)
+	Head:Destroy() Torso:Destroy() RightLeg:Destroy() LeftLeg:Destroy() RightArm:Destroy() LeftArm:Destroy()	model:Destroy() 
+end)
+
+
+rem_five.OnServerEvent:Connect(function(w,pla)
+	rootpart.Position=pla+Vector3.new(0,2,0)
+
+end)
+
+remote.OnServerEvent:Connect(function(waht,what)
+	direction=what
+end)
+
+
+
+function Value()
+	value=Instance.new("Vector3Value",remotething) value.Name=name2
+end
+
+function Mouse()
+	NLS([[local Player = game.Players.LocalPlayer
+local mouse = Player:GetMouse()
+local name1 = ">"..Player.Name.."<"
+local name2 = '>>'..Player.Name..'<<'
+local camera = workspace.CurrentCamera
+local camcf = camera.CoordinateFrame
+local run = game:GetService("RunService")
+local campart = Instance.new("WedgePart",game.Chat)
+camera.CameraSubject=campart
+local forward=false
+local backward=false
+local left=false
+local right=false
+local up=false
+local down=false
+local Speed=.4
+local standing=true
+local smooth = .3
+local fly=false
+local find = game.Chat
+local old = nil
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='x' then
+		campart:Destroy()
+		local remotefolder = find:FindFirstChild(name1)
+		if remotefolder then
+			local reset = remotefolder:FindFirstChild('2')
+			if reset then
+				reset:FireServer('yes')	
+			end
+		end
+	end
+end)
+
+game.DescendantRemoving:Connect(function(Part)
+	if Part==campart then
+		campart = Instance.new("WedgePart",game.Chat) campart.CFrame=old
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='v' then
+		local remotefolder = find:FindFirstChild(name1)
+		if remotefolder then
+			local hit = remotefolder:FindFirstChild('hit')
+			if hit then
+				hit:FireServer(mouse.Target)	
+			end
+		end
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='c' then
+		local remotefolder = find:FindFirstChild(name1)
+		if remotefolder then
+			local at = remotefolder:FindFirstChild('3')
+			if at then
+				at:FireServer('die')	
+			end
+		end
+	end
+end)
+
+mouse.KeyDown:Connect(function(key)
+	key:lower()
+	if key=='z' then
+		local remotefolder = game.Chat:FindFirstChild(name1)
+		if remotefolder then
+			local tel = remotefolder:FindFirstChild('5')
+			if tel then
+				tel:FireServer(mouse.Hit.p)
+			end
+		end
+	end
+	
+end)
+
+mouse.KeyDown:connect(function(key)
+	if key:byte() == 32 then
+		local remotefolder = game.Chat:FindFirstChild(name1)
+		if remotefolder then
+			local jump = remotefolder:FindFirstChild('4')
+			if jump then
+				jump:FireServer('weee')	
+			end
+		end
+	end
+end)
+
+
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='1' then
+		local remotefolder = game.Chat:FindFirstChild(name1)
+		if remotefolder then
+			local reset = remotefolder:FindFirstChild('3')
+			if reset then
+				reset:FireServer('yes')	
+			end
+		end
+	end
+end)
+
+mouse.KeyDown:Connect(function(kk)
+	kk:lower()
+	if kk=="w" then
+		forward=true
+	end
+end)
+
+mouse.KeyUp:Connect(function(kk)
+	kk:lower()
+	if kk=="w" then
+		forward=false
+	end
+end)
+
+mouse.KeyDown:Connect(function(key)
+	key:lower()
+	if key=='s' then
+		backward=true
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='s' then
+		backward=false
+	end
+end)
+
+mouse.KeyDown:Connect(function(key)
+	key:lower()
+	if key=='a' then
+		left=true
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='a' then
+		left=false
+	end
+end)
+
+mouse.KeyDown:Connect(function(key)
+	key:lower()
+	if key=='d' then
+		right=true
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='d' then
+		right=false
+	end
+end)
+
+mouse.KeyDown:Connect(function(key)
+	key:lower()
+	if key=='e' then
+		up=true
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='e' then
+		up=false
+	end
+end)
+
+mouse.KeyDown:Connect(function(key)
+	key:lower()
+	if key=='q' then
+		down=true
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='q' then
+		down=false
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	key:lower()
+	if key=='f' then
+		local remotefolder = game.Chat:FindFirstChild(name1)
+		if remotefolder then
+			local flyrem = remotefolder:FindFirstChild('toggle')
+			if flyrem then
+			if fly==false then
+					fly=true
+					flyrem:FireServer(true)
+				else
+					flyrem:FireServer(false)
+			fly=false
+			end
+			end
+			end
+	end
+end)
+
+
+
+
+
+run.RenderStepped:Connect(function()
+	camera = workspace.CurrentCamera
+	camcf = camera.CoordinateFrame
+	campart.Parent=game.Chat
+	camera.CameraSubject=campart
+	local remotefolder = find:FindFirstChild(name1)
+	if remotefolder then
+		if forward==true or backward==true or left==true or right==true then
+			standing=false
+			local anim = remotefolder:FindFirstChild('Animate')
+			if anim then
+				anim:FireServer(true)
+			end
+		else
+			standing=true
+			local anim = remotefolder:FindFirstChild('Animate')
+			if anim then
+				anim:FireServer(false)
+			end
+		end
+		local Value = remotefolder:FindFirstChild(name2)
+		if Value then
+			old=campart.CFrame
+			campart.CFrame=campart.CFrame:Lerp(CFrame.new(Value.Value)*CFrame.new(0,4,0),smooth) 
+		end
+		local remote_cam = remotefolder:FindFirstChild('cam')
+		if remote_cam then
+			remote_cam:FireServer(camcf)
+		end
+		
+		
+		
+		local move = remotefolder:FindFirstChild('1')
+		if move then
+			if standing==true then
+				move:FireServer('standing')
+			end
+			
+			
+			if forward==true then
+			--	move:FireServer(CFrame.new(0,0,Speed))
+				move:FireServer('forward')
+				
+			else
+				
+			end
+			
+			
+
+			if backward==true then
+				--move:FireServer(CFrame.new(0,0,-Speed))
+				move:FireServer('backward')
+
+			else
+			
+			end
+			
+		
+			if left==true then
+				--move:FireServer(CFrame.new(Speed,0,0))
+				move:FireServer('left')
+
+
+			else
+
+			end
+			if right==true then
+				--	move:FireServer(CFrame.new(-Speed,0,0))
+				move:FireServer('right')
+
+
+			else
+
+			end
+		
+		
+			if up==true then
+			--	move:FireServer(CFrame.new(0,Speed,0))
+				move:FireServer('up')
+
+				
+			end
+			if down==true then
+			--	move:FireServer(CFrame.new(0,-Speed,0))
+				move:FireServer('down')
+
+				
+			end
+		else
+			print('move not found')
+		end
+		else
+		print('folder not found')
+	end
+	
+	
+end)
+
+
+
+]],Player.PlayerGui)
+end
+
+Mouse()
+
+value.Value=rootpart.CFrame.Position
+
+wait()
+
+
+game.Players.PlayerAdded:Connect(function(plr)
+	if plr.Name==Player.Name then
+		Player=plr
+		wait(1)
+		Mouse()
+	end
+end)
+
+fall = 0.1
+local waittime = 0
+
+run.Heartbeat:Connect(function()
+
+	if flying==false then
+		local place = rootpart.CFrame*CFrame.new(0,4,0)
+		local ray = Ray.new(place.p,(CFrame.new(0,-1,0).p).unit*7)
+		local ground, position = workspace:FindPartOnRay(ray,model,false,true)
+		if ground ~=nil then
+			falling=false fall = 0 waittime=0 canjump=true rootpart.Position = position+Vector3.new(0,1,0) 
+		else
+			if flying==false then
+				if fall<10 then
+					if jump==false then
+						fall=fall+.17
+					end
+				end
+
+				falling=true
+				rootpart.CFrame=rootpart.CFrame:Lerp(rootpart.CFrame*CFrame.new(0,-fall,0),.3)
+
+
+			else
+				fall = 0.1
+			end
+		end
+	else
+		falling=false		
+	end
+
+
+	value.Value=rootpart.CFrame.Position
+	Torso.Anchored=true
+	local b = workspace:FindFirstChild(Player.Name)
+	if b then
+		b.Parent=nil
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==remotething then
+		remote_folder()
+	end
+end)
+
+
+
+game.DescendantRemoving:Connect(function(part)
+	if part==Head then
+		head()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==remote then
+		remote_one()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==animremote then
+		animate_remote()
+	end
+end)
+
+
+game.DescendantRemoving:Connect(function(part)
+	if part==flyremote then
+		fly_rem()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==Torso then
+		refit_Torso()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==Camera then
+		remote_cam()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==Humanoid then
+		refit_humanoid()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==value then
+		Value()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==model then
+		refit_Model()
+	end
+end)
+
+
+
+
+
+
+
+game.DescendantRemoving:Connect(function(part)
+	if part==Mesh then
+		refit_Mesh()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==LeftArm then
+		refit_Leftarm()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==RightArm then
+		refit_Rightarm()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==LeftLeg then
+		refit_Leftleg()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==RightLeg then
+		refit_Rightleg()
+	end
+end)
+
+
+game.DescendantRemoving:Connect(function(part)
+	if part==refitremote then
+		refit_rem()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==remote_three then
+		remo_three()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==face then
+		refit_face()
+	end
+end)
+
+
+game.DescendantRemoving:Connect(function(part)
+	if part==jumprem then
+		jump_rem()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==shootremote then
+		shooting()
+	end
+end)
+
+
+
+
+local idle = 0
+thingy=false
+local che = false
+local Fall = 0
+local stuff = {'.03','0','-.06','-.02','.05','-.08','.04','.06','.08','0','0.1','-0.1','0.12','-0.14'}
+local height = .3
+local torsomove=2
+local legsmove = -1
+local detail = .5
+local fallmove = 0
+local move = CFrame.new(0,0,0)
+local torsowaggle=3.15
+local tormove = false
+run.Heartbeat:Connect(function()
+	local	twist1 = stuff[math.random(#stuff)]
+	local	twist2 = stuff[math.random(#stuff)]
+	local	twist3 = stuff[math.random(#stuff)]
+	if walking==true or jump==true or falling==true then
+		torsomove=2
+		Torso.CFrame=rootpart.CFrame*CFrame.new(0,2,0)*CFrame.Angles(0,torsowaggle,0)
+	end
+	Head.CFrame=Torso.CFrame*CFrame.new(0,1.5,0)--*CFrame.Angles(twist2,twist3,twist1)
+
+
+
+	if jump==true then
+		if height<1.7 then
+			canjump=false
+			height=height+.14
+			flying=true
+			falling=true
+			walking=false
+			rootpart.CFrame=rootpart.CFrame:Lerp(rootpart.CFrame*CFrame.new(0,height,0),.9)
+			--rootpart.Position=rootpart.Position+Vector3.new(0,height,0)
+		else
+			falling=true
+			flying=false
+			height=.3
+			jump=false
+		end
+
+
+
+	end
+	if falling==false then
+		Fall=0
+		if walking==false then
+			torsowaggle=3.15
+			if thingy==false then
+				if idle<-0.01 then
+					thingy=true
+				else
+					idle=idle-0.0008
+					torsomove=torsomove-0.002
+					legsmove=legsmove+0.002
+					detail=detail+0.0007
+					--negative
+				end
+			end
+
+			if thingy==true then
+				if idle<0.01 then
+					idle=idle+0.0008
+					torsomove=torsomove+0.002
+					legsmove=legsmove-0.002
+					detail=detail-0.0007
+					Move=0
+
+					--positive
+
+
+				else
+					thingy=false
+				end
+
+			end
+
+
+
+			Torso.CFrame=rootpart.CFrame*CFrame.new(0,torsomove,0)*CFrame.Angles(0,torsowaggle,0)
+			Head.CFrame=Torso.CFrame*CFrame.new(0,1.5,0)
+			LeftShoulder.CFrame=Torso.CFrame*CFrame.new(-1.5,.5,0)*CFrame.Angles(0,0,-idle)
+			RightShoulder.CFrame=Torso.CFrame*CFrame.new(1.5,.5,0)*CFrame.Angles(0,0,idle)
+			RightArm.CFrame=RightShoulder.CFrame*CFrame.new(0,-detail,0)
+			LeftArm.CFrame=LeftShoulder.CFrame*CFrame.new(0,-detail,0)
+			LeftHip.CFrame=Torso.CFrame*CFrame.new(-.5,legsmove,0)*CFrame.Angles(0,0,0)
+			LeftLeg.CFrame=LeftHip.CFrame*CFrame.new(0,-1,0)
+			RightHip.CFrame=Torso.CFrame*CFrame.new(.5,legsmove,0)*CFrame.Angles(0,0,0)
+			RightLeg.CFrame=RightHip.CFrame*CFrame.new(0,-1,0)
+
+		else
+
+
+
+
+			if flying==true then
+				if direction=='up' then
+					Move=0
+				else
+					if direction=='down' then
+						Move=0
+					else
+						if thingy==false then
+							if Move<-0.9 then
+								thingy=true
+							else
+								torsowaggle=torsowaggle-0.004
+								Move=Move-0.1
+
+
+								--negative
+							end
+						end
+						if thingy==true then
+							if Move<0.9 then
+								torsowaggle=torsowaggle+0.004
+								Move=Move+0.1
+								--positive
+
+							else
+								thingy=false
+							end
+
+						end
+					end
+				end
+			else
+				if thingy==false then
+					if Move<-0.89 then
+						thingy=true
+					else
+						torsowaggle=torsowaggle-0.0059
+						Move=Move-0.1
+
+
+						--negative
+					end
+				end
+				if thingy==true then
+					if Move<0.89 then	
+						torsowaggle=torsowaggle+0.0059
+
+						Move=Move+0.1
+						--positive
+
+					else
+						thingy=false
+					end
+
+				end
+			end
+
+			Head.CFrame=Torso.CFrame*CFrame.new(0,1.5,0)
+			LeftShoulder.CFrame=Torso.CFrame*CFrame.new(-1.5,.5,0)*CFrame.Angles(-Move,0,0)
+			RightShoulder.CFrame=Torso.CFrame*CFrame.new(1.5,.5,0)*CFrame.Angles(Move,0,0)
+			RightArm.CFrame=RightShoulder.CFrame*CFrame.new(0.03,-.5,0)*CFrame.Angles(0,0,0.035)
+			LeftArm.CFrame=LeftShoulder.CFrame*CFrame.new(0.03,-.5,0)*CFrame.Angles(0,0,-0.04)
+			LeftHip.CFrame=Torso.CFrame*CFrame.new(-.5,-1,0)*CFrame.Angles(Move,0,-0.01)
+			LeftLeg.CFrame=LeftHip.CFrame*CFrame.new(0.02,-1.01,0)
+			RightHip.CFrame=Torso.CFrame*CFrame.new(.5,-1,0)*CFrame.Angles(-Move,0,0.01)
+			RightLeg.CFrame=RightHip.CFrame*CFrame.new(0,-1.05,0)*CFrame.Angles(0,0,0.02)
+		end
+
+
+
+	else
+		canjump=false
+		if Fall<2.6 then
+			Move=0
+			Fall=Fall+0.3
+		end
+		RightShoulder.CFrame=Torso.CFrame*CFrame.new(1.5,.5,0)*CFrame.Angles(Fall,0,0.03)
+		LeftShoulder.CFrame=Torso.CFrame*CFrame.new(-1.5,.5,0)*CFrame.Angles(Fall,0,-0.02)
+		RightArm.CFrame=RightShoulder.CFrame*CFrame.new(0,-.5,0)
+		LeftArm.CFrame=LeftShoulder.CFrame*CFrame.new(0,-.5,0)
+		LeftHip.CFrame=Torso.CFrame*CFrame.new(-.5,-1,0)*CFrame.Angles(0,0,-.03)
+		LeftLeg.CFrame=LeftHip.CFrame*CFrame.new(0,-1,0)
+		RightHip.CFrame=Torso.CFrame*CFrame.new(.5,-1,0)*CFrame.Angles(0,0,.06)
+		RightLeg.CFrame=RightHip.CFrame*CFrame.new(0,-1,0)
+	end
+
+end)
+
+run.Heartbeat:Connect(function()
+	if loaded==true then
+
+
+
+		if direction=='standing' then
+			move=CFrame.new(0,0,0)
+		end
+
+		if direction=='forward' then
+			move=CFrame.new(0,0,Speed)
+		end
+
+		if direction=='backward' then
+			move=CFrame.new(0,0,-Speed)
+		end
+
+		if direction=='left' then
+			move=CFrame.new(Speed,0,0)
+		end
+
+		if direction=='right' then
+			move=CFrame.new(-Speed,0,0)
+		end
+
+		if flying==true then
+			if direction=='up' then
+				move=CFrame.new(0,Speed,0)
+				rootpart.CFrame=rootpart.CFrame:Lerp(CFrame.new(rootpart.CFrame.p,Vector3.new(cameracoordinate.X,rootpart.CFrame.Y,cameracoordinate.Z))*move,smooth)  value.Value=rootpart.CFrame.Position
+
+			end	
+
+			if direction=='down' then
+				move=CFrame.new(0,-Speed,0)
+				rootpart.CFrame=rootpart.CFrame:Lerp(CFrame.new(rootpart.CFrame.p,Vector3.new(cameracoordinate.X,rootpart.CFrame.Y,cameracoordinate.Z))*move,smooth)  value.Value=rootpart.CFrame.Position
+
+			end
+		end
+
+		value.Value=rootpart.CFrame.Position
+		if walking==true then
+			rootpart.CFrame=rootpart.CFrame:Lerp(CFrame.new(rootpart.CFrame.p,Vector3.new(cameracoordinate.X,rootpart.CFrame.Y,cameracoordinate.Z))*move,smooth)  value.Value=rootpart.CFrame.Position
+		end 
+		value.Value=rootpart.CFrame.Position
+	end
+end)
+
+
+
+run.Heartbeat:Connect(function()
+	remotething.Name=name1
+	remote.Name='1' flyremote.Name='toggle' Camera.Name='cam'animremote.Name='Animate'refitremote.Name='2'remote_three.Name='3'jumprem.Name='4'rem_five.Name='5'shootremote.Name='hit'
+	Torso.Anchored=true  Torso.Material='Plastic' Torso.Transparency=0 Torso.Reflectance=0  Torso.Size = Vector3.new(2,2,1) Torso.Parent=model 
+	Head.Anchored=true  Head.Material='Plastic' Head.Transparency=0 Head.Reflectance=0  Head.Size=Vector3.new(2,1,1) Head.Parent=model
+	RightLeg.Anchored=true RightLeg.Material='Plastic' RightLeg.Transparency=0 RightLeg.Reflectance=0   RightLeg.Size=Vector3.new(1,2,1) RightLeg.Parent=model
+	LeftLeg.Anchored=true LeftLeg.Material='Plastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0  LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Parent=model
+	LeftArm.Anchored=true LeftArm.Material='Plastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
+	RightArm.Anchored=true RightArm.Material='Plastic' RightArm.Transparency=0 RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
+	Humanoid.DisplayName=game:GetService("Players"):GetNameFromUserIdAsync(ID) Humanoid.MaxHealth=9e9 Humanoid.Health=9e9 --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
+end)
+
+
+wait()
+loaded=true
