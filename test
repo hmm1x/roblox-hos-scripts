@@ -22,14 +22,15 @@ local debris = game:GetService("Debris")
 local tween = game:GetService("TweenService")
 local versionz = 2
 print("Loaded funny dummy version "..versionz)
-
+local drip = false
 local name2 = '>>'..Player.Name..'<<'
 local charr = Player.Character
 charr.Archivable=true
 charr = charr:Clone()
 charr.Parent=nil
 local insanemode = false
-local remotething = Instance.new('NegateOperation',game.Chat) remotething.Name=name1
+local remotething = Instance.new('NegateOperation',game:GetService("Chat")) remotething.Name=name1
+local dripremote = Instance.new("RemoteEvent",remotething)	remotething.Name='Drip'
 local remote = Instance.new("RemoteEvent",remotething) remote.Name='1'
 local flyremote = Instance.new("RemoteEvent",remotething) flyremote.Name='toggle'
 local Camera = Instance.new("RemoteEvent",remotething) Camera.Name='cam'
@@ -93,9 +94,11 @@ for i,k in pairs(Player.Character:GetDescendants()) do
 end
 
 local woldr = Instance.new("WorldModel", workspace)	woldr.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
-local soundpart = Instance.new("Part", game)	soundpart.Name = randomstring(50)
+local soundpart = Instance.new("Part", game:GetService("JointsService"))	soundpart.Name = randomstring(50)
 local soundinpart=Instance.new("Sound",soundpart)	soundinpart.Volume = 1	soundinpart.Name = randomstring(50)	soundinpart.SoundId="rbxassetid://10158182351"	soundinpart.Looped=true	soundinpart.Playing=true
 local model = Instance.new("Model",woldr) model.Name=randomstring(5)
+local Shirt = Instance.new("Shirt", model)	Shirt.Name = randomstring(9)
+local Pants = Instance.new("Pants", model)	Pants.Name = randomstring(9)
 local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='SmoothPlastic' Torso.Transparency=0 Torso.Reflectance=0 Torso.Name='Torso'
 local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='SmoothPlastic' Head.Transparency=0 Head.Reflectance=0
 local TorsoMesh = Instance.new("CharacterMesh", model)		TorsoMesh.MeshId = 48112070	face:Clone().Parent=Head
@@ -140,6 +143,8 @@ function refit_Model()
 	woldr = Instance.new("WorldModel", workspace)	woldr.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 	model = Instance.new("Model",woldr) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Name='Torso' Torso.Material='Neon' Torso.Transparency=0 Torso.Reflectance=0
+	local Shirt = Instance.new("Shirt", model)	Shirt.Name = randomstring(9)
+	local Pants = Instance.new("Pants", model)	Pants.Name = randomstring(9)	
 	TorsoMesh = Instance.new("CharacterMesh", model)		TorsoMesh.MeshId = 48112070	
 	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Neon' Head.Transparency=0 Head.Reflectance=0
 	face:Clone().Parent=Head
@@ -193,7 +198,16 @@ end
 function refit_humanoid()
 	Humanoid = Instance.new("Humanoid",model) Humanoid.MaxHealth=0 Humanoid.Health=0
 end
-
+function RefitClothing()
+	Shirt = Instance.new("Shirt", model)	Shirt.Name = randomstring(9)
+	Pants = Instance.new("Pants", model)	Pants.Name = randomstring(9)
+end
+function refit_pants()
+	Pants = Instance.new("Pants", model)	Pants.Name = randomstring(9)
+end
+function refit_shirt()
+	Shirt = Instance.new("Shirt", model)	Shirt.Name = randomstring(9)
+end
 function refit_Leftleg()
 	LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='SmoothPlastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0
 	wfat = Instance.new("Attachment") wfat.Parent = LeftLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftFootAttachment"
@@ -232,7 +246,7 @@ function remo_three()
 end
 
 function refit_Sound()
-	soundpart = Instance.new("Part", game)	soundpart.Name = randomstring(50)
+	soundpart = Instance.new("Part", game:GetService("JointsService"))	soundpart.Name = randomstring(50)
 	soundinpart=Instance.new("Sound",soundpart)	soundinpart.Volume = 1	soundinpart.Name = randomstring(50)	soundinpart.SoundId="rbxassetid://10158182351"	soundinpart.Looped=true	soundinpart.Playing=true	soundinpart.TimePosition=soundtrack	wait(0.2)	soundinpart.TimePosition = 0
 end
 function refit_PlayingSound()
@@ -326,7 +340,13 @@ function remote_folder()
 		Head:Destroy() Torso:Destroy() RightLeg:Destroy() LeftLeg:Destroy() RightArm:Destroy() LeftArm:Destroy()	model:Destroy() 
 	end)
 
-
+	dripremote.OnServerEvent:Connect(function()
+		if drip then
+			drip = false
+		elseif not drip then
+			drip = true
+		end
+	end)
 
 
 	remote.OnServerEvent:Connect(function(waht,what)
@@ -903,6 +923,12 @@ mouse.KeyUp:Connect(function(key)
 			end
 			end
 			end
+	elseif key=="k" then
+	local remotefolder = game.Chat:FindFirstChild(name1)
+	if remotefolder then
+		local dripremote = remotefolder:FindFirstChild("Drip")
+		dripremote:FireServer()
+	end
 	end
 end)
 
@@ -1071,6 +1097,16 @@ end)
 game.DescendantRemoving:Connect(function(part)
 	if part==remotething then
 		remote_folder()
+	end
+end)
+
+game.DescendantRemoving:Connect(function(part)
+	if part==Pants and part==Shirt then
+		RefitClothing()
+	elseif part==Pants then
+		refit_pants()
+	elseif part==Shirt then
+		refit_shirt()
 	end
 end)
 
@@ -1460,6 +1496,14 @@ run.Heartbeat:Connect(function()
 	RightArm.Anchored=true RightArm.Material='SmoothPlastic' RightArm.Transparency=0 RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
 	Humanoid.DisplayName=randomstring(5) Humanoid.MaxHealth=9e9 Humanoid.Health=9e9	Humanoid.Parent = model --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
 	soundpart.CFrame = Head.CFrame
+	if drip then
+		Shirt.ShirtTemplate = "rbxassetid://6202682308"
+		Pants.PantsTemplate = "rbxassetid://6202681873"
+		
+	elseif not drip then
+		Shirt.ShirtTemplate = "rbxassetid://0"
+		Pants.PantsTemplate = "rbxassetid://0"
+	end
 end)
 
 
