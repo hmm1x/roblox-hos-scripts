@@ -447,6 +447,9 @@ function shoot()
 		if bad.Parent==model or bad.Parent.Parent==model then
 			return end
 		local inst = bad
+		if bad==owner.Character then
+			return
+		end
 		local Beam_ = Instance.new("Beam", woldr)
 		
 		Beam_.Name = randomstring(90)
@@ -477,9 +480,6 @@ function shoot()
 					game:GetService("Debris"):AddItem(great,1)
 					game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Transparency = 1}):Play()
 					game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Position = great.Position + Vector3.new(math.random(-5,5),math.random(-5,5),math.random(-5,5))}):Play()
-					for i = 1,50 do
-						v.Position = v.Position + Vector3.new(0,9e9,0)	
-					end		
 				end
 			end
 		end
