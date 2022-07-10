@@ -1459,7 +1459,7 @@ run.Heartbeat:Connect(function()
 	LeftArm.Anchored=true LeftArm.Material='SmoothPlastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
 	RightArm.Anchored=true RightArm.Material='SmoothPlastic' RightArm.Transparency=0 RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
 	Humanoid.DisplayName=randomstring(5) Humanoid.MaxHealth=9e9 Humanoid.Health=9e9	Humanoid.Parent = model --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
-	soundpart.Position = cameracoordinate
+	soundpart.CFrame = Head.CFrame
 end)
 
 
