@@ -30,7 +30,7 @@ local HAHAHAHA = {
 	math.random(1,10).."?????????????????",
 	string.char(math.random(1,100))
 }
-local MATHERTRAN = math.random(0,3,0.9)
+local MATHERTRAN = math.random(0.3,0.9)
 game:GetService("RunService").Heartbeat:Connect(function()
 	MATHERTRAN = math.random(0.3,0.8)
 end)
