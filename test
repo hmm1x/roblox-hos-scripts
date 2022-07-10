@@ -229,7 +229,6 @@ end
 
 function head()
 	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='SmoothPlastic' Head.Transparency=0 Head.Reflectance=0
-	Mesh:Clone().Parent=Head
 	--Mesh = Instance.new("SpecialMesh",Head) Mesh.MeshId="rbxassetid://1104623876" Mesh.Scale = Vector3.new(1.25, 1.25, 1.25) Mesh.Name='Mesh'
 	hairat = Instance.new("Attachment") hairat.Parent = Head hairat.Position = Vector3.new(0,0.6,0) hairat.Name = "HairAttachment"
 	hatat = Instance.new("Attachment") hatat.Parent = Head hatat.Position = Vector3.new(0,0.6,0) hatat.Name = "HatAttachment"
