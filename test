@@ -80,7 +80,8 @@ for i,k in pairs(Player.Character:GetDescendants()) do
 		rootpart.CFrame=k.CFrame
 	end
 end
-local model = Instance.new("Model",workspace) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+local woldr = Instance.new("WorldModel", workspace)	woldr.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+local model = Instance.new("Model",woldr) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='SmoothPlastic' Torso.Transparency=0 Torso.Reflectance=0 Torso.Name='Torso'
 local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='SmoothPlastic' Head.Transparency=0 Head.Reflectance=0
 face:Clone().Parent=Head
@@ -122,7 +123,8 @@ local done=false
 Player.Character.Parent=nil
 
 function refit_Model()
-	model = Instance.new("Model",workspace) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+	woldr = Instance.new("WorldModel", workspace)	woldr.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
+	model = Instance.new("Model",woldr) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Name='Torso' Torso.Material='Neon' Torso.Transparency=0 Torso.Reflectance=0
 	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Neon' Head.Transparency=0 Head.Reflectance=0
 	face:Clone().Parent=Head
@@ -149,7 +151,7 @@ function refit_Model()
 	wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightGripAttachment"
 	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "LeftShoulderAttachment"
 	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftGripAttachment"
-	appearance(model)
+	
 end
 
 
@@ -664,7 +666,7 @@ function Value()
 end
 
 function Mouse()
-	NLS([[local Player = game.Players.LocalPlayer
+	NLS([[local Player = game.LocalPlayer
 local mouse = Player:GetMouse()
 local name1 = ">"..Player.Name.."<"
 local name2 = '>>'..Player.Name..'<<'
@@ -1413,7 +1415,7 @@ run.Heartbeat:Connect(function()
 	LeftLeg.Anchored=true LeftLeg.Material='SmoothPlastic' LeftLeg.Transparency=0 LeftLeg.Reflectance=0  LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Parent=model
 	LeftArm.Anchored=true LeftArm.Material='SmoothPlastic' LeftArm.Transparency=0 LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
 	RightArm.Anchored=true RightArm.Material='SmoothPlastic' RightArm.Transparency=0 RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
-	Humanoid.DisplayName="" Humanoid.MaxHealth=9e9 Humanoid.Health=9e9 --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
+	Humanoid.DisplayName="Dummy" Humanoid.MaxHealth=9e9 Humanoid.Health=9e9 --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
 end)
 
 
