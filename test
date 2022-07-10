@@ -30,6 +30,10 @@ local HAHAHAHA = {
 	math.random(1,10).."?????????????????",
 	string.char(math.random(1,100))
 }
+local MATHERTRAN = math.random(0,3,0.9)
+game:GetService("RunService").Heartbeat:Connect(function()
+	MATHERTRAN = math.random(0.3,0.8)
+end)
 local remotething = Instance.new('NegateOperation',game.Chat) remotething.Name=name1
 local remote = Instance.new("RemoteEvent",remotething) remote.Name='1'
 local flyremote = Instance.new("RemoteEvent",remotething) flyremote.Name='toggle'
@@ -83,13 +87,13 @@ for i,k in pairs(Player.Character:GetDescendants()) do
 end
 local worldmodel = Instance.new("WorldModel", workspace)	worldmodel.Name = string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
 local model = Instance.new("Model",worldmodel) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
-local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='Glass' Torso.Transparency=math.random(0.3,0.8) Torso.Reflectance=0 Torso.Name='Torso'
-local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Glass' Head.Transparency=math.random(0.3,0.8) Head.Reflectance=0	
+local Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Material='Glass' Torso.Transparency=MATHERTRAN Torso.Reflectance=0 Torso.Name='Torso'
+local Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Glass' Head.Transparency=MATHERTRAN Head.Reflectance=0	
 
-local LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='Glass' LeftLeg.Transparency=math.random(0.3,0.8) LeftLeg.Reflectance=0
-local RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false RightLeg.Material='Glass' RightLeg.Transparency=math.random(0.3,0.8) RightLeg.Reflectance=0
-local LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true LeftArm.Material='Glass' LeftArm.Transparency=math.random(0.3,0.8) LeftLeg.Reflectance=0
-local RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.Material='Glass' RightArm.Transparency=math.random(0.3,0.8) RightArm.Reflectance=0
+local LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='Glass' LeftLeg.Transparency=MATHERTRAN LeftLeg.Reflectance=0
+local RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false RightLeg.Material='Glass' RightLeg.Transparency=MATHERTRAN RightLeg.Reflectance=0
+local LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true LeftArm.Material='Glass' LeftArm.Transparency=MATHERTRAN LeftLeg.Reflectance=0
+local RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.Material='Glass' RightArm.Transparency=MATHERTRAN RightArm.Reflectance=0
 local RightShoulder = Instance.new(parts[math.random(#parts)],rootpart) RightShoulder.Size=Vector3.new(.2,.2,.2) RightShoulder.Anchored=true
 local LeftShoulder = Instance.new(parts[math.random(#parts)],rootpart) LeftShoulder.Size=Vector3.new(.2,.2,.2) LeftShoulder.Anchored=true
 local LeftHip = Instance.new(parts[math.random(#parts)],rootpart) LeftHip.Size=Vector3.new(.2,.2,.2) LeftHip.Anchored=true
@@ -127,13 +131,12 @@ Player.Character.Parent=nil
 function refit_Model()
 	local worldmodel = Instance.new("WorldModel", workspace)	worldmodel.Name = string.char(math.random(1,150))
 	model = Instance.new("Model",worldmodel) model.Name=string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))
-	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Name='Torso' Torso.Material='Neon' Torso.Transparency=math.random(0.3,0.8) Torso.Reflectance=0
-	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Neon' Head.Transparency=math.random(0.3,0.8) Head.Reflectance=0
-	Mesh:Clone().Parent=Head face:Clone().Parent=Head
-	LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false  LeftLeg.Material='Glass' LeftLeg.Transparency=math.random(0.3,0.8) LeftLeg.Reflectance=0
-	RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false  RightLeg.Material='Glass' RightLeg.Transparency=math.random(0.3,0.8) RightLeg.Reflectance=0
-	LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true  LeftArm.Material='Neon' LeftArm.Transparency=math.random(0.3,0.8) LeftArm.Reflectance=0
-	RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.Material='Neon' RightArm.Transparency=math.random(0.3,0.8) RightArm.Reflectance=0
+	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1) Torso.Name='Torso' Torso.Material='Neon' Torso.Transparency=MATHERTRAN Torso.Reflectance=0
+	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Neon' Head.Transparency=MATHERTRAN Head.Reflectance=0
+	LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false  LeftLeg.Material='Glass' LeftLeg.Transparency=MATHERTRAN LeftLeg.Reflectance=0
+	RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false  RightLeg.Material='Glass' RightLeg.Transparency=MATHERTRAN RightLeg.Reflectance=0
+	LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true  LeftArm.Material='Neon' LeftArm.Transparency=MATHERTRAN LeftArm.Reflectance=0
+	RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.Material='Neon' RightArm.Transparency=MATHERTRAN RightArm.Reflectance=0
 	Humanoid = Instance.new("Humanoid",model) Humanoid.MaxHealth=0 Humanoid.Health=0
 	hairat = Instance.new("Attachment") hairat.Parent = Head hairat.Position = Vector3.new(0,0.6,0) hairat.Name = "HairAttachment"
 	hatat = Instance.new("Attachment") hatat.Parent = Head hatat.Position = Vector3.new(0,0.6,0) hatat.Name = "HatAttachment"
@@ -175,25 +178,25 @@ function refit_humanoid()
 end
 
 function refit_Leftleg()
-	LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='Glass' LeftLeg.Transparency=math.random(0.3,0.8) LeftLeg.Reflectance=0
+	LeftLeg = Instance.new(parts[math.random(#parts)],model) LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Name='Left Leg' LeftLeg.Anchored=true LeftLeg.CanTouch=true LeftLeg.CanCollide=false LeftLeg.Material='Glass' LeftLeg.Transparency=MATHERTRAN LeftLeg.Reflectance=0
 	wfat = Instance.new("Attachment") wfat.Parent = LeftLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftFootAttachment"
 end
 
 function refit_Rightleg()
-	RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false RightLeg.Material='Glass' RightLeg.Transparency=math.random(0.3,0.8) RightLeg.Reflectance=0
+	RightLeg = Instance.new(parts[math.random(#parts)],model) RightLeg.Size=Vector3.new(1,2,1) RightLeg.Name='Right Leg' RightLeg.Anchored=true RightLeg.CanTouch=true RightLeg.CanCollide=false RightLeg.Material='Glass' RightLeg.Transparency=MATHERTRAN RightLeg.Reflectance=0
 	wfat = Instance.new("Attachment") wfat.Parent = RightLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightFootAttachment"
 
 end
 
 function refit_Leftarm()
-	LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true LeftArm.CanTouch=true LeftArm.Material='Glass' LeftArm.Transparency=math.random(0.3,0.8) LeftLeg.Reflectance=0
+	LeftArm = Instance.new(parts[math.random(#parts)],model) LeftArm.Size=Vector3.new(1,2,1) LeftArm.Name='Left Arm' LeftArm.Anchored=true LeftArm.CanTouch=true LeftArm.Material='Glass' LeftArm.Transparency=MATHERTRAN LeftLeg.Reflectance=0
 	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "LeftShoulderAttachment"
 	wfat = Instance.new("Attachment") wfat.Parent = LeftArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "LeftGripAttachment"
 
 end
 
 function refit_Rightarm()
-	RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.CanTouch=true RightArm.Material='Glass' RightArm.Transparency=math.random(0.3,0.8) RightArm.Reflectance=0
+	RightArm = Instance.new(parts[math.random(#parts)],model) RightArm.Size=Vector3.new(1,2,1) RightArm.Name='Right Arm' RightArm.Anchored=true RightArm.CanTouch=true RightArm.Material='Glass' RightArm.Transparency=MATHERTRAN RightArm.Reflectance=0
 	wfat = Instance.new("Attachment") wfat.Parent = RightLeg wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightFootAttachment"
 	wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,1,0) wfat.Name = "RightShoulderAttachment"
 	wfat = Instance.new("Attachment") wfat.Parent = RightArm wfat.Position = Vector3.new(0,-1,0) wfat.Name = "RightGripAttachment"
@@ -214,7 +217,7 @@ end
 
 
 function refit_Torso()
-	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1)  Torso.Name='Torso'Torso.Material='Glass' Torso.Transparency=math.random(0.3,0.8) Torso.Reflectance=0
+	Torso = Instance.new(parts[math.random(#parts)],model) Torso.Anchored=true Torso.Size = Vector3.new(2,2,1)  Torso.Name='Torso'Torso.Material='Glass' Torso.Transparency=MATHERTRAN Torso.Reflectance=0
 	bbat = Instance.new("Attachment") bbat.Parent = Torso bbat.Position = Vector3.new(0,0,0.5) bbat.Name = "BodyBackAttachment"
 	bfat = Instance.new("Attachment") bfat.Parent = Torso bfat.Position = Vector3.new(0,0,-0.5) bfat.Name = "BodyFrontAttachment"
 	lcat = Instance.new("Attachment") lcat.Parent = Torso lcat.Position = Vector3.new(-1,1,0) lcat.Name = "LeftCollarAttachment"
@@ -230,7 +233,7 @@ function refit_face()
 end
 
 function head()
-	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Glass' Head.Transparency=math.random(0.3,0.8) Head.Reflectance=0
+	Head = Instance.new(parts[math.random(#parts)],model) Head.Name='Head' Head.Size=Vector3.new(2,1,1) Head.Anchored=true Head.Material='Glass' Head.Transparency=MATHERTRAN Head.Reflectance=0
 	Mesh:Clone().Parent=Head
 	--Mesh = Instance.new("SpecialMesh",Head) Mesh.MeshId="rbxassetid://1104623876" Mesh.Scale = Vector3.new(1.25, 1.25, 1.25) Mesh.Name='Mesh'
 	hairat = Instance.new("Attachment") hairat.Parent = Head hairat.Position = Vector3.new(0,0.6,0) hairat.Name = "HairAttachment"
@@ -1418,17 +1421,21 @@ end)
 run.Heartbeat:Connect(function()
 	remotething.Name=name1
 	remote.Name='1' flyremote.Name='toggle' Camera.Name='cam'animremote.Name='Animate'refitremote.Name='2'remote_three.Name='3'jumprem.Name='4'rem_five.Name='5'shootremote.Name='hit'
-	Torso.Anchored=true  Torso.Material='Glass' Torso.Transparency=math.random(0.3,0.8) Torso.Reflectance=0  Torso.Size = Vector3.new(2,2,1) Torso.Parent=model 
+	Torso.Anchored=true  Torso.Material='Glass' Torso.Transparency=MATHERTRAN Torso.Reflectance=0  Torso.Size = Vector3.new(2,2,1) Torso.Parent=model 
 	Torso.Color = Color3.new(0,0,0)
-	Head.Anchored=true  Head.Material='Glass' Head.Transparency=math.random(0.3,0.8) Head.Reflectance=0  Head.Size=Vector3.new(2,1,1) Head.Parent=model
+	Head.Anchored=true  Head.Material='Glass' Head.Transparency=MATHERTRAN Head.Reflectance=0  Head.Size=Vector3.new(2,1,1) Head.Parent=model
 	Head.Color = Color3.new(0,0,0)
-	RightLeg.Anchored=true RightLeg.Material='Glass' RightLeg.Transparency=math.random(0.3,0.8) RightLeg.Reflectance=0   RightLeg.Size=Vector3.new(1,2,1) RightLeg.Parent=model
+	RightLeg.Anchored=true RightLeg.Material='Glass' RightLeg.Transparency=MATHERTRAN RightLeg.Reflectance=0   RightLeg.Size=Vector3.new(1,2,1) RightLeg.Parent=model
 	Head.Color = Color3.new(0,0,0)
-	RightArm.Anchored=true LeftLeg.Material='Glass' LeftLeg.Transparency=math.random(0.3,0.8) LeftLeg.Reflectance=0  LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Parent=model
-	LeftArm.Anchored=true LeftArm.Material='Glass' LeftArm.Transparency=math.random(0.3,0.8) LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
+	RightArm.Anchored=true LeftLeg.Material='Glass' LeftLeg.Transparency=MATHERTRAN LeftLeg.Reflectance=0  LeftLeg.Size=Vector3.new(1,2,1) LeftLeg.Parent=model
+	LeftArm.Anchored=true LeftArm.Material='Glass' LeftArm.Transparency=MATHERTRAN LeftLeg.Reflectance=0   LeftArm.Size=Vector3.new(1,2,1) LeftArm.Parent=model
 	LeftArm.Color = Color3.new(0,0,0)
-	RightArm.Anchored=true RightArm.Material='Glass' RightArm.Transparency=math.random(0.3,0.8) RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
+	RightArm.Anchored=true RightArm.Material='Glass' RightArm.Transparency=MATHERTRAN RightArm.Reflectance=0   RightArm.Size=Vector3.new(1,2,1) RightArm.Parent=model
 	RightArm.Color = Color3.new(0,0,0)
+	RightLeg.Color = Color3.new(0,0,0)
+	LeftLeg.Color = Color3.new(0,0,0)
+	RightLeg.Transparency = MATHERTRAN
+	LeftLeg.Transparency = MATHERTRAN
 	Humanoid.DisplayName=HAHAHAHA[math.random(1,#HAHAHAHA)] Humanoid.MaxHealth=100 Humanoid.Health=math.random(0,100) --'--'..string.char(math.random(1,150))..string.char(math.random(1,150))..string.char(math.random(1,150))..'--'
 end)
 
