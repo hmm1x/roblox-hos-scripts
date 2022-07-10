@@ -450,23 +450,8 @@ function shoot()
 		if bad==owner.Character then
 			return
 		end
-		local Beam_ = Instance.new("Beam", woldr)
-		
-		Beam_.Name = randomstring(90)
-		Beam_.Texture = "rbxassetid://788718095"
-		
-		local attach0 = Instance.new("Attachment", Torso)
-		attach0.Name = randomstring(90)
-		local att1 = Instance.new("SpawnLocation", woldr)
-		att1.Name = randomstring(90)
-		att1.Enabled = false
-		att1.Transparency = 1
-		att1.Anchored = true
-		att1.Position = to
-		local attach1 = Instance.new("Attachment", att1)
-		attach1.Name = randomstring(80)
-		Beam_.Attachment0 = attach0
-		Beam_.Attachment1 = attach1
+
+
 		if inst.Parent:IsA("Model") then
 			for i,v in pairs(inst.Parent:GetDescendants()) do
 				if v and v:IsA("BasePart") or v:IsA("MeshPart") then
@@ -480,6 +465,7 @@ function shoot()
 					game:GetService("Debris"):AddItem(great,1)
 					game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Transparency = 1}):Play()
 					game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Position = great.Position + Vector3.new(math.random(-5,5),math.random(-5,5),math.random(-5,5))}):Play()
+					debris:AddItem(v,0)					
 				end
 			end
 		end
@@ -496,10 +482,7 @@ function shoot()
 		for i = 1,50 do
 			inst.Position = inst.Position + Vector3.new(0,9e9,0)	
 		end		
-		game:GetService("Debris"):AddItem(attach0,2)
-		debris:AddItem(attach1,2)
-		debris:AddItem(Beam_,2)
-		debris:AddItem(att1,2)
+
 		debris:AddItem(inst,0)
 		
 	end)
