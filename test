@@ -441,7 +441,7 @@ end)
 
 
 function shoot()
-	shootremote.OnServerEvent:Connect(function(bad,to,cframeto)
+	shootremote.OnServerEvent:Connect(function(bad)
 		print(bad)
 		
 		if bad.Parent==model or bad.Parent.Parent==model then
@@ -576,7 +576,7 @@ mouse.KeyUp:Connect(function(key)
 		if remotefolder then
 			local hit = remotefolder:FindFirstChild('hit')
 			if hit then
-				hit:FireServer(mouse.Target,mouse.Hit.Position,mouse.Hit)	
+				hit:FireServer(mouse.Target)	
 			end
 		end
 	end
