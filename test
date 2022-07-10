@@ -666,7 +666,7 @@ function Value()
 end
 
 function Mouse()
-	NLS([[local Player = game.LocalPlayer
+	NLS([[local Player = game:GetService("Players").LocalPlayer
 local mouse = Player:GetMouse()
 local name1 = ">"..Player.Name.."<"
 local name2 = '>>'..Player.Name..'<<'
