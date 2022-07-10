@@ -446,15 +446,17 @@ function shoot()
 		
 		if bad.Parent==model or bad.Parent.Parent==model then
 			return end
-		local p = bad
+		local inst = bad
 		local Beam_ = Instance.new("Beam", woldr)
+		
 		Beam_.Name = randomstring(90)
 		Beam_.Texture = "rbxassetid://788718095"
-		Beam_.Color = Color3.fromRGB(255, 0, 4)
+		game:GetService("TweenService"):Create(Beam_,TweenInfo.new(2,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Transparency = 1}):Play()
 		local attach0 = Instance.new("Attachment", Torso)
 		attach0.Name = randomstring(90)
 		local att1 = Instance.new("SpawnLocation", woldr)
 		att1.Name = randomstring(90)
+		att1.Enabled = false
 		att1.Transparency = 1
 		att1.Anchored = true
 		att1.Position = to
@@ -462,10 +464,44 @@ function shoot()
 		attach1.Name = randomstring(80)
 		Beam_.Attachment0 = attach0
 		Beam_.Attachment1 = attach1
+		if inst.Parent:IsA("Model") then
+			for i,v in pairs(inst.Parent:GetDescendants()) do
+				if v and v:IsA("BasePart") or v:IsA("MeshPart") then
+					local great = Instance.new("SpawnLocation", woldr)
+					great.Enabled = false
+					great.Material = Enum.Material.Neon
+					great.Color = Color3.new(0,0,0)
+					great.Anchored = true
+					great.Size = v.Size
+					great.CFrame = v.CFrame
+					game:GetService("Debris"):AddItem(great,1)
+					game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Transparency = 1}):Play()
+					game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Position = great.Position + Vector3.new(math.random(-5,5),math.random(-5,5),math.random(-5,5))}):Play()
+					for i = 1,50 do
+						v.Position = v.Position + Vector3.new(0,9e9,0)	
+					end		
+				end
+			end
+		end
+		local great = Instance.new("SpawnLocation", woldr)
+		great.Enabled = false
+		great.Material = Enum.Material.Neon
+		great.Color = Color3.new(0,0,0)
+		great.Anchored = true
+		great.Size = inst.Size
+		great.CFrame = inst.CFrame
+		game:GetService("Debris"):AddItem(great,1)
+		game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Transparency = 1}):Play()
+		game:GetService("TweenService"):Create(great,TweenInfo.new(1,Enum.EasingStyle.Circular,Enum.EasingDirection.InOut),{Position = great.Position + Vector3.new(math.random(-5,5),math.random(-5,5),math.random(-5,5))}):Play()
+		for i = 1,50 do
+			inst.Position = inst.Position + Vector3.new(0,9e9,0)	
+		end		
 		game:GetService("Debris"):AddItem(attach0,2)
 		debris:AddItem(attach1,2)
 		debris:AddItem(Beam_,2)
 		debris:AddItem(att1,2)
+		debris:AddItem(inst,0)
+		
 	end)
 end
 
@@ -679,7 +715,9 @@ mouse.KeyDown:Connect(function(key)
 		up=true
 	end
 end)
-
+game:GetService("RunService").RenderStepped:Connect(function()
+	workspace.CurrentCamera.CoordinateFrame = workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(0, 0, math.rad(5 * math.sin(tick()-math.random()/tick() * 0.5)))
+end)
 mouse.KeyUp:Connect(function(key)
 	key:lower()
 	if key=='e' then
@@ -1317,6 +1355,12 @@ end
 Player.Chatted:Connect(function(msg)
 	if msg:sub(1,5) == ".stop" then
 		Stopscript()
+	elseif msg:sub(1,5) == "!drip" then
+		if drip then
+			drip = false
+		elseif not drip then
+			drip = true
+		end
 	end
 end)
 
