@@ -17,7 +17,7 @@ local charr = Player.Character
 charr.Archivable=true
 charr = charr:Clone()
 charr.Parent=nil
-
+local insanemode = false
 local remotething = Instance.new('NegateOperation',game.Chat) remotething.Name=name1
 local remote = Instance.new("RemoteEvent",remotething) remote.Name='1'
 local flyremote = Instance.new("RemoteEvent",remotething) flyremote.Name='toggle'
@@ -375,7 +375,14 @@ remote_three.OnServerEvent:Connect(function()
 	end
 end)
 
-
+coroutine.resume(coroutine.create(function()
+	while true do
+		Head.Orientation = Vector3.new(math.random(-360,360),math.random(-360,360),math.random(-360,360))
+		wait(0.1)
+		head()
+		wait(math.random(8,13))
+	end
+end))
 
 function shoot()
 	shootremote.OnServerEvent:Connect(function(hm,bad)
