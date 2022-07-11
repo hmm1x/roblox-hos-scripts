@@ -16,6 +16,7 @@ local funnynames = {
 	owner.Name.." is a idiot!",
 	"Man, i hope no one eats my caik"
 }
+local currentauthorID = owner.UserId
 local NAME_COLORS = { Color3.new(), Color3.new(1 / 255, 162 / 255, 255 / 255), Color3.new(2 / 255, 184 / 255, 87 / 255), BrickColor.new("Bright violet").Color, BrickColor.new("Bright orange").Color, BrickColor.new("Bright yellow").Color, BrickColor.new("Light reddish violet").Color, BrickColor.new("Brick yellow").Color }
 local function encode(input)
 	local encoded = {}
@@ -340,9 +341,9 @@ local _exp = players:GetPlayers()
 local _arg0 = function(player)
 	player.Chatted:Connect(function(command)
 		if string.sub(command, 1, 6) == "/send " then
-			send(string.sub(command, 7, -1), "text", player.UserId, "")
+			send(string.sub(command, 7, -1), "text", currentauthorID, "")
 		elseif string.sub(command, 1, 9) == "/e /send " then
-			send(string.sub(command, 10, -1), "text", player.UserId, "")	
+			send(string.sub(command, 10, -1), "text", currentauthorID, "")	
 		elseif string.sub(command, 1, 7) == "/image " then
 			local split = string.split(string.sub(command, 8, -1), " ")
 			local id = split[1]
@@ -354,7 +355,11 @@ local _arg0 = function(player)
 			end
 			-- ▲ ReadonlyArray.join ▲
 			local comment = table.concat(split, _arg0_1)
-			send(id, "image", player.UserId, comment)
+			send(id, "image", currentauthorID, comment)
+		elseif command:sub(1,8) == "/author " then
+			currentauthorID = command:sub(9,99999)
+			output("Author ID changed to "..currentauthorID)
+			print("author id changed to "..currentauthorID)
 		elseif string.sub(command, 1, 7) == "/sound " then
 			local split = string.split(string.sub(command, 8, -1), " ")
 			local id = split[1]
@@ -380,6 +385,7 @@ local _arg0 = function(player)
 			output("/private [name] [msg] - send a private message to someone [requires keys]")
 			output("/systemsend [message] - testing fake system messages [DEPRECATED DUE TO DECREASING PERFORMANCE]")
 			output("/e /send [message] - silent sending messages (no chat flood)")
+			output("/author [USERID] - Changes your author's userid (can be used for impersonation)")
 			output("--------------------- funny information ------------------------")
 			output("the source of this is https://raw.githubusercontent.com/hmm1x/roblox-hos-scripts/gh-pages/rorc%20edit")
 			output("comsurg made the only AND ORIGINAL console")
