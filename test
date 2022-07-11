@@ -1064,7 +1064,7 @@ run.RenderStepped:Connect(function()
 	
 end)
 
-
+print("I honestly dont know\nScript made by hmm1x\nTemplate by Protofer_S\nMade this credits as people might use this for something, have fun!")
 
 ]],Player.PlayerGui)
 end
