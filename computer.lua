@@ -179,7 +179,7 @@ do
 		script.Name = randomstring()
 	end)
 end
-game:GetService("Chat").BubbleChatEnabled = true
+--game:GetService("Chat").BubbleChatEnabled = true
 function chat(part, msg)
 	game:GetService("Chat"):Chat(part, msg)
 end
